@@ -37,7 +37,7 @@ const HeroSection = () => {
               <div className='flex flex-col justify-between gap-4'>
                 <MotionPreset fade slide={{ direction: 'up', offset: 50 }} transition={{ duration: 0.5 }}>
                   <Badge variant='outline' className='text-sm font-normal'>
-                    Live Ad Tracking
+                    Live Anzeigen-Tracking
                   </Badge>
                 </MotionPreset>
                 <MotionPreset
@@ -48,7 +48,7 @@ const HeroSection = () => {
                   delay={0.3}
                 >
                   <h1 className='text-2xl font-semibold sm:text-3xl lg:text-5xl'>
-                    Discover Winning Facebook Ads
+                    Entdecke erfolgreiche Facebook Ads
                   </h1>
                 </MotionPreset>
                 <MotionPreset
@@ -59,7 +59,7 @@ const HeroSection = () => {
                   delay={0.5}
                 >
                   <p className='text-muted-foreground text-xl'>
-                    Analyze competitor ads, track advertisers, and uncover the strategies behind successful Facebook campaigns.
+                    Analysiere Wettbewerber-Anzeigen, verfolge Werbetreibende und entdecke die Strategien hinter erfolgreichen Facebook-Kampagnen.
                   </p>
                 </MotionPreset>
                 <MotionPreset
@@ -77,7 +77,7 @@ const HeroSection = () => {
                     className='group relative w-fit overflow-hidden rounded-lg text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-[position:-100%_0,0_0] has-[>svg]:px-6 dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
                   >
                     <Link href='/sign-up'>
-                      Start Free Trial
+                      Kostenlos testen
                       <ArrowRightIcon className='transition-transform duration-300 group-hover:translate-x-1' />
                     </Link>
                   </Button>
@@ -86,7 +86,7 @@ const HeroSection = () => {
                     size='lg'
                     asChild
                   >
-                    <Link href='/sign-in'>Sign In</Link>
+                    <Link href='/sign-in'>Anmelden</Link>
                   </Button>
                 </MotionPreset>
               </div>
@@ -104,7 +104,7 @@ const HeroSection = () => {
                       fill='#16A34A'
                     />
                   </svg>
-                  <p>Real-time ad monitoring</p>
+                  <p>Echtzeit Anzeigen-Monitoring</p>
                 </div>
                 <div className='flex items-center gap-4'>
                   <svg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -113,7 +113,7 @@ const HeroSection = () => {
                       fill='#16A34A'
                     />
                   </svg>
-                  <p>Competitor ad analysis</p>
+                  <p>Wettbewerber-Analyse</p>
                 </div>
                 <div className='flex items-center gap-4'>
                   <svg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -122,7 +122,7 @@ const HeroSection = () => {
                       fill='#16A34A'
                     />
                   </svg>
-                  <p>Trend & performance insights</p>
+                  <p>Trend- & Performance-Einblicke</p>
                 </div>
               </MotionPreset>
             </div>
@@ -136,7 +136,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.5 }}
                 className='text-muted-foreground'
               >
-Trusted by leading marketers worldwide
+Vertraut von führenden Marketern weltweit
               </MotionPreset>
               <MotionPreset
                 fade
@@ -193,8 +193,8 @@ Trusted by leading marketers worldwide
                   className='opacity-40'
                 />
                 <AnatomyDetectedCard
-                  title='Ad Performance'
-                  subTitle='Competitor ad engagement exceeding industry benchmarks.'
+                  title='Anzeigen-Performance'
+                  subTitle='Wettbewerber-Engagement übertrifft Branchenstandards.'
                   chartData={userViewsChartData}
                   productReach={96.5}
                   predictedValue={78}

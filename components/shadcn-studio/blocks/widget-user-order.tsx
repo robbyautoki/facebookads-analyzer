@@ -16,26 +16,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 import { cn } from '@/lib/utils'
 
-const listItems = ['Share', 'Update', 'Refresh']
+const listItems = ['Teilen', 'Aktualisieren', 'Neu laden']
 
 const tabs = [
   {
-    name: 'Image',
+    name: 'Bild',
     value: 'image',
     icon: ImageIcon,
     contentData: [
       {
-        label: 'High Engagement',
+        label: 'Hohes Engagement',
         value: 4250,
         progress: 80
       },
       {
-        label: 'Medium Engagement',
+        label: 'Mittleres Engagement',
         value: 2150,
         progress: 60
       },
       {
-        label: 'Low Engagement',
+        label: 'Niedriges Engagement',
         value: 1750,
         progress: 40
       }
@@ -47,39 +47,39 @@ const tabs = [
     icon: VideoIcon,
     contentData: [
       {
-        label: 'High Views',
+        label: 'Hohe Aufrufe',
         value: 3250,
         progress: 70
       },
       {
-        label: 'Medium Views',
+        label: 'Mittlere Aufrufe',
         value: 1150,
         progress: 50
       },
       {
-        label: 'Low Views',
+        label: 'Niedrige Aufrufe',
         value: 950,
         progress: 30
       }
     ]
   },
   {
-    name: 'Carousel',
+    name: 'Karussell',
     value: 'carousel',
     icon: LayoutGridIcon,
     contentData: [
       {
-        label: 'Multi-Image',
+        label: 'Multi-Bild',
         value: 2250,
         progress: 80
       },
       {
-        label: 'Product Catalog',
+        label: 'Produktkatalog',
         value: 1150,
         progress: 50
       },
       {
-        label: 'Story Format',
+        label: 'Story-Format',
         value: 950,
         progress: 30
       }
@@ -102,7 +102,7 @@ const UserOrderCard = ({ className }: { className?: string }) => {
           </Avatar>
           <div className='flex flex-col gap-1'>
             <span className='text-xl font-medium'>Nike Ads</span>
-            <span className='text-muted-foreground text-sm'>Active Campaign</span>
+            <span className='text-muted-foreground text-sm'>Aktive Kampagne</span>
           </div>
         </div>
         <DropdownMenu>
@@ -125,8 +125,8 @@ const UserOrderCard = ({ className }: { className?: string }) => {
         <Separator />
         <div className='flex flex-1 flex-col gap-2'>
           <div className='flex items-baseline gap-2'>
-            <span className='text-2xl font-medium'>12,847</span>
-            <span className='text-muted-foreground text-sm'>Ads Tracked</span>
+            <span className='text-2xl font-medium'>12.847</span>
+            <span className='text-muted-foreground text-sm'>Anzeigen verfolgt</span>
           </div>
           <Tabs defaultValue='image' className='flex-1 justify-between gap-6'>
             <TabsList className='w-full'>
