@@ -179,7 +179,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ScrapeAds
           })
           return NextResponse.json({
             success: true,
-            data: cached.cachedData as AdvertiserAnalysis,
+            data: cached.cachedData as unknown as AdvertiserAnalysis,
             fromCache: true,
           })
         }
