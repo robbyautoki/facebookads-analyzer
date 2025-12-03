@@ -39,7 +39,8 @@ interface MotionPresetProps {
     | boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   motionProps?: Omit<HTMLMotionProps<any>, 'children' | 'className' | 'ref' | 'transition'>
-  ref?: React.Ref<HTMLElement>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref?: React.Ref<any>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,9 +62,10 @@ function MotionPreset({
   zoom = false,
   motionProps = {}
 }: MotionPresetProps) {
-  const localRef = React.useRef<HTMLElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const localRef = React.useRef<any>(null)
 
-  React.useImperativeHandle(ref, () => localRef.current as HTMLElement)
+  React.useImperativeHandle(ref, () => localRef.current)
 
   const inViewResult = useInView(localRef, {
     once: inViewOnce,
