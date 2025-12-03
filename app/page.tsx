@@ -4,6 +4,7 @@ import Navbar from "@/components/shadcn-studio/blocks/navbar-component-05/navbar
 import HeroSection from "@/components/shadcn-studio/blocks/hero-section-31/hero-section-31"
 import Features from "@/components/shadcn-studio/blocks/features-section-12/features-section-12"
 import Pricing from "@/components/shadcn-studio/blocks/pricing-component-04/pricing-component-04"
+import Footer from "@/components/shadcn-studio/blocks/footer-component-02/footer-component-02"
 
 const navigationData = [
   { title: 'Funktionen', href: '#funktionen' },
@@ -41,6 +42,7 @@ export default function LandingPage() {
       <HeroSection />
       <Features />
       <Pricing plans={pricingPlans} />
+      <Footer />
     </>
   )
 }
