@@ -34,15 +34,6 @@ export default function AdvertiserResultsPage() {
   const [selectedAd, setSelectedAd] = useState<SimpleAd | null>(null)
   const [watchlistSaved, setWatchlistSaved] = useState(false)
 
-  // Background gradient component
-  const GradientBackground = () => (
-    <div className="fixed inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl animate-pulse delay-1000" />
-    </div>
-  )
-
   const fetchData = async () => {
     setLoading(true)
     setError(null)
@@ -191,9 +182,7 @@ export default function AdvertiserResultsPage() {
   const inactiveAds = ads.filter((ad) => !ad.isActive)
 
   return (
-    <>
-      <GradientBackground />
-      <div className="min-h-screen p-6 md:p-8 space-y-6">
+    <div className="space-y-6">
       {/* Back button */}
       <Button variant="ghost" onClick={() => router.back()} className="rounded-2xl">
         <ArrowLeft className="mr-2 h-4 w-4" />
@@ -355,9 +344,8 @@ export default function AdvertiserResultsPage() {
         </TabsContent>
       </Tabs>
 
-        {/* Ad Detail Modal */}
-        <AdDetailModal ad={selectedAd} onClose={() => setSelectedAd(null)} />
-      </div>
-    </>
+      {/* Ad Detail Modal */}
+      <AdDetailModal ad={selectedAd} onClose={() => setSelectedAd(null)} />
+    </div>
   )
 }
