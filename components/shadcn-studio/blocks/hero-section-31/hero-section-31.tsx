@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { ArrowRightIcon } from 'lucide-react'
 
 import { MotionPreset } from '@/components/ui/motion-preset'
@@ -75,17 +76,17 @@ const HeroSection = () => {
                     size='lg'
                     className='group relative w-fit overflow-hidden rounded-lg text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-[position:-100%_0,0_0] has-[>svg]:px-6 dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
                   >
-                    <a href='/sign-up'>
+                    <Link href='/sign-up'>
                       Start Free Trial
                       <ArrowRightIcon className='transition-transform duration-300 group-hover:translate-x-1' />
-                    </a>
+                    </Link>
                   </Button>
                   <Button
                     className='bg-primary/10 text-primary hover:bg-primary/20 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 rounded-lg text-base'
                     size='lg'
                     asChild
                   >
-                    <a href='/sign-in'>Sign In</a>
+                    <Link href='/sign-in'>Sign In</Link>
                   </Button>
                 </MotionPreset>
               </div>

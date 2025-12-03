@@ -29,7 +29,8 @@ const userViewsChartConfig = {
   }
 } satisfies ChartConfig
 
-const CustomTooltip = ({ active, payload }: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
   if (active && payload && payload.length) {
     return (
       <div className='bg-primary text-primary-foreground mx-2 space-y-1 rounded-md px-3 py-1.5 shadow-lg'>
