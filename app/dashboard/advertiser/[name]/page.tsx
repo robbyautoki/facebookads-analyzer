@@ -257,19 +257,24 @@ export default function AdvertiserResultsPage() {
                   <span className="text-white/70">{advertiser.totalAds} Werbeanzeigen</span>
                   <span className="text-green-400">{advertiser.activeAds} Aktiv</span>
                   {fromCache && (
-                    <button
-                      onClick={() => fetchData(true)}
-                      className="text-yellow-400 hover:text-yellow-300 flex items-center gap-1 transition-colors"
-                    >
+                    <span className="text-yellow-400 flex items-center gap-1">
                       <RefreshCw className="h-3 w-3" />
-                      Aus Cache - Aktualisieren
-                    </button>
+                      Aus Cache geladen
+                    </span>
                   )}
                 </div>
               </div>
 
               {/* Aktions-Buttons */}
               <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="outline"
+                  className="rounded-2xl border-white/20 text-white hover:bg-white/10"
+                  onClick={() => fetchData(true)}
+                >
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Neu analysieren
+                </Button>
                 <Button
                   variant="outline"
                   className="rounded-2xl border-white/20 text-white hover:bg-white/10"
