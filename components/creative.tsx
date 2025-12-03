@@ -49,6 +49,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import { AdvertiserSearch } from "@/components/advertiser-search"
 
 // Sample data for ads
 const ads = [
@@ -1109,33 +1110,8 @@ export function FacebookAdsAnalyzer() {
                 </TabsContent>
 
                 <TabsContent value="files" className="space-y-8 mt-0">
-                  <section>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 p-8 text-white"
-                    >
-                      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                        <div className="space-y-2">
-                          <h2 className="text-3xl font-bold">Advertiser Database</h2>
-                          <p className="max-w-[600px] text-white/80">
-                            Track, manage, and analyze advertisers you are monitoring.
-                          </p>
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                          <Button className="rounded-2xl bg-white/20 backdrop-blur-md hover:bg-white/30">
-                            <Download className="mr-2 h-4 w-4" />
-                            Export List
-                          </Button>
-                          <Button className="rounded-2xl bg-white text-blue-700 hover:bg-white/90">
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add Advertiser
-                          </Button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </section>
+                  {/* Search Section */}
+                  <AdvertiserSearch />
 
                   <div className="flex flex-wrap gap-3 mb-6">
                     <Button variant="outline" className="rounded-2xl">
@@ -1158,15 +1134,6 @@ export function FacebookAdsAnalyzer() {
                       <TrendingUp className="mr-2 h-4 w-4" />
                       Top Performers
                     </Button>
-                    <div className="flex-1"></div>
-                    <div className="relative w-full md:w-auto mt-3 md:mt-0">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        type="search"
-                        placeholder="Search advertisers..."
-                        className="w-full rounded-2xl pl-9 md:w-[200px]"
-                      />
-                    </div>
                   </div>
 
                   <section className="space-y-4">
