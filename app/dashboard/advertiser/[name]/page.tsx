@@ -27,58 +27,58 @@ import { AudienceInsights } from "@/components/audience-insights"
 import { AdDetailModal } from "@/components/ad-detail-modal"
 import type { AdvertiserAnalysis, SimpleAd } from "@/types/ads"
 
-// Dynamischer Gradient basierend auf Kategorie
-const getCategoryGradient = (category?: string): string => {
-  if (!category) return 'from-slate-900 via-slate-800 to-slate-900'
+// Akzentfarbe basierend auf Kategorie (für Border und dezente Highlights)
+const getCategoryAccent = (category?: string): { border: string; text: string; glow: string } => {
+  if (!category) return { border: 'border-slate-700', text: 'text-slate-400', glow: 'shadow-slate-500/10' }
 
   const cat = category.toLowerCase()
 
   // Entertainment / Media
   if (cat.includes('entertainment') || cat.includes('media') || cat.includes('music') || cat.includes('video')) {
-    return 'from-purple-900 via-violet-800 to-indigo-900'
+    return { border: 'border-violet-500/30', text: 'text-violet-400', glow: 'shadow-violet-500/20' }
   }
   // Technology / Software
   if (cat.includes('tech') || cat.includes('software') || cat.includes('app') || cat.includes('computer')) {
-    return 'from-cyan-900 via-blue-800 to-indigo-900'
+    return { border: 'border-cyan-500/30', text: 'text-cyan-400', glow: 'shadow-cyan-500/20' }
   }
   // E-commerce / Shopping
   if (cat.includes('commerce') || cat.includes('shop') || cat.includes('retail') || cat.includes('store')) {
-    return 'from-emerald-900 via-teal-800 to-cyan-900'
+    return { border: 'border-emerald-500/30', text: 'text-emerald-400', glow: 'shadow-emerald-500/20' }
   }
   // Finance / Business
   if (cat.includes('finance') || cat.includes('bank') || cat.includes('business') || cat.includes('consulting')) {
-    return 'from-amber-900 via-yellow-800 to-orange-900'
+    return { border: 'border-amber-500/30', text: 'text-amber-400', glow: 'shadow-amber-500/20' }
   }
   // Health / Fitness
   if (cat.includes('health') || cat.includes('fitness') || cat.includes('medical') || cat.includes('wellness')) {
-    return 'from-green-900 via-emerald-800 to-teal-900'
+    return { border: 'border-emerald-500/30', text: 'text-emerald-400', glow: 'shadow-emerald-500/20' }
   }
   // Food / Restaurant
   if (cat.includes('food') || cat.includes('restaurant') || cat.includes('cafe') || cat.includes('drink')) {
-    return 'from-orange-900 via-red-800 to-rose-900'
+    return { border: 'border-orange-500/30', text: 'text-orange-400', glow: 'shadow-orange-500/20' }
   }
   // Fashion / Beauty
   if (cat.includes('fashion') || cat.includes('beauty') || cat.includes('clothing') || cat.includes('apparel')) {
-    return 'from-pink-900 via-rose-800 to-fuchsia-900'
+    return { border: 'border-pink-500/30', text: 'text-pink-400', glow: 'shadow-pink-500/20' }
   }
   // Gaming
   if (cat.includes('gaming') || cat.includes('game') || cat.includes('esport')) {
-    return 'from-violet-900 via-purple-800 to-fuchsia-900'
+    return { border: 'border-purple-500/30', text: 'text-purple-400', glow: 'shadow-purple-500/20' }
   }
   // Education
   if (cat.includes('education') || cat.includes('school') || cat.includes('university') || cat.includes('learning')) {
-    return 'from-blue-900 via-indigo-800 to-violet-900'
+    return { border: 'border-blue-500/30', text: 'text-blue-400', glow: 'shadow-blue-500/20' }
   }
   // Travel
   if (cat.includes('travel') || cat.includes('hotel') || cat.includes('tourism') || cat.includes('airline')) {
-    return 'from-sky-900 via-cyan-800 to-teal-900'
+    return { border: 'border-sky-500/30', text: 'text-sky-400', glow: 'shadow-sky-500/20' }
   }
   // Crypto / Web3
   if (cat.includes('crypto') || cat.includes('web3') || cat.includes('blockchain') || cat.includes('nft')) {
-    return 'from-amber-900 via-orange-800 to-yellow-900'
+    return { border: 'border-amber-500/30', text: 'text-amber-400', glow: 'shadow-amber-500/20' }
   }
 
-  return 'from-slate-900 via-slate-800 to-slate-900'
+  return { border: 'border-slate-700', text: 'text-slate-400', glow: 'shadow-slate-500/10' }
 }
 
 export default function AdvertiserResultsPage() {
@@ -270,185 +270,184 @@ export default function AdvertiserResultsPage() {
         Zurück zur Suche
       </Button>
 
-      {/* Advertiser Header - Premium Design */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Card className={`overflow-hidden rounded-3xl bg-gradient-to-r ${getCategoryGradient(advertiser.category)} border-0 relative`}>
-          {/* Decorative Elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
-            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
-          </div>
-
-          <CardContent className="p-8 text-white relative z-10">
-            {/* Top Section: Profile + Info + Actions */}
-            <div className="flex flex-col lg:flex-row gap-6 items-start">
-              {/* Profile Photo */}
-              <div className="h-24 w-24 rounded-2xl bg-white/10 backdrop-blur-sm overflow-hidden flex-shrink-0 border border-white/20 shadow-2xl">
-                {advertiser.profilePhoto ? (
-                  <img
-                    src={advertiser.profilePhoto}
-                    alt={advertiser.name}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <div className="h-full w-full flex items-center justify-center text-4xl font-bold bg-gradient-to-br from-white/20 to-white/5">
-                    {advertiser.name.charAt(0)}
+      {/* Advertiser Header - Premium Dark Design mit Akzent-Border */}
+      {(() => {
+        const accent = getCategoryAccent(advertiser.category)
+        return (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card className={`overflow-hidden rounded-3xl bg-slate-950 border-t-2 ${accent.border} relative`}>
+              <CardContent className="p-8 relative">
+                {/* Top Section: Profile + Info + Actions */}
+                <div className="flex flex-col lg:flex-row gap-6 items-start">
+                  {/* Profile Photo */}
+                  <div className="h-24 w-24 rounded-2xl bg-slate-800 overflow-hidden flex-shrink-0 border border-slate-700 shadow-xl">
+                    {advertiser.profilePhoto ? (
+                      <img
+                        src={advertiser.profilePhoto}
+                        alt={advertiser.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className={`h-full w-full flex items-center justify-center text-4xl font-bold bg-slate-800 ${accent.text}`}>
+                        {advertiser.name.charAt(0)}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
 
-              {/* Info */}
-              <div className="flex-1 space-y-3">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="text-3xl font-bold">{advertiser.name}</h1>
-                  {advertiser.verification === "VERIFIED" && (
-                    <Badge className="bg-blue-500/80 backdrop-blur-sm border border-blue-400/30">Verifiziert</Badge>
-                  )}
-                  {fromCache && (
-                    <Badge className="bg-yellow-500/20 text-yellow-300 border border-yellow-400/30">
-                      <RefreshCw className="h-3 w-3 mr-1" />
-                      Cache
-                    </Badge>
-                  )}
+                  {/* Info */}
+                  <div className="flex-1 space-y-3">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <h1 className="text-3xl font-bold text-white">{advertiser.name}</h1>
+                      {advertiser.verification === "VERIFIED" && (
+                        <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30">Verifiziert</Badge>
+                      )}
+                      {fromCache && (
+                        <Badge className="bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                          <RefreshCw className="h-3 w-3 mr-1" />
+                          Cache
+                        </Badge>
+                      )}
+                    </div>
+                    {advertiser.category && (
+                      <p className={`font-medium ${accent.text}`}>{advertiser.category}</p>
+                    )}
+                    {advertiser.about && (
+                      <p className="text-slate-400 text-sm line-clamp-2 max-w-2xl">{advertiser.about}</p>
+                    )}
+                    {/* Facebook Link */}
+                    {advertiser.pageUrl && (
+                      <a
+                        href={advertiser.pageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+                      >
+                        <ExternalLink className="h-3 w-3" />
+                        Auf Facebook ansehen
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
+                      onClick={() => fetchData(true)}
+                    >
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Aktualisieren
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
+                      onClick={handleShare}
+                    >
+                      <Share2 className="mr-2 h-4 w-4" />
+                      Teilen
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
+                      onClick={handleSaveToWatchlist}
+                      disabled={watchlistSaved}
+                    >
+                      <Bookmark className={`mr-2 h-4 w-4 ${watchlistSaved ? "fill-current" : ""}`} />
+                      {watchlistSaved ? "Gespeichert" : "Merken"}
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
+                      onClick={handleExportCSV}
+                    >
+                      <Download className="mr-2 h-4 w-4" />
+                      Export
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-semibold transition-all"
+                    >
+                      <FileText className="mr-2 h-4 w-4" />
+                      Bericht
+                    </Button>
+                  </div>
                 </div>
-                {advertiser.category && (
-                  <p className="text-white/80 font-medium">{advertiser.category}</p>
-                )}
-                {advertiser.about && (
-                  <p className="text-white/60 text-sm line-clamp-2 max-w-2xl">{advertiser.about}</p>
-                )}
-                {/* Facebook Link */}
-                {advertiser.pageUrl && (
-                  <a
-                    href={advertiser.pageUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+
+                {/* Statistics Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
                   >
-                    <ExternalLink className="h-3 w-3" />
-                    Auf Facebook ansehen
-                  </a>
-                )}
-              </div>
+                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
+                      <BarChart3 className="h-4 w-4" />
+                      Anzeigen gesamt
+                    </div>
+                    <div className="text-3xl font-bold text-white">{advertiser.totalAds}</div>
+                  </motion.div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
-                  onClick={() => fetchData(true)}
-                >
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                  Aktualisieren
-                </Button>
-                <Button
-                  size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
-                  onClick={handleShare}
-                >
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Teilen
-                </Button>
-                <Button
-                  size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
-                  onClick={handleSaveToWatchlist}
-                  disabled={watchlistSaved}
-                >
-                  <Bookmark className={`mr-2 h-4 w-4 ${watchlistSaved ? "fill-current" : ""}`} />
-                  {watchlistSaved ? "Gespeichert" : "Merken"}
-                </Button>
-                <Button
-                  size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
-                  onClick={handleExportCSV}
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Export
-                </Button>
-                <Button
-                  size="sm"
-                  className="rounded-xl bg-white text-slate-900 hover:bg-white/90 font-semibold transition-all"
-                >
-                  <FileText className="mr-2 h-4 w-4" />
-                  Bericht
-                </Button>
-              </div>
-            </div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
+                  >
+                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
+                      <TrendingUp className="h-4 w-4" />
+                      Aktive Anzeigen
+                    </div>
+                    <div className="text-3xl font-bold text-white">{advertiser.activeAds}</div>
+                  </motion.div>
 
-            {/* Statistics Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-colors"
-              >
-                <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
-                  <BarChart3 className="h-4 w-4" />
-                  Anzeigen gesamt
-                </div>
-                <div className="text-3xl font-bold text-white">{advertiser.totalAds}</div>
-              </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
+                  >
+                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
+                      <Eye className="h-4 w-4" />
+                      Reichweite
+                    </div>
+                    <div className="text-3xl font-bold text-white">
+                      {audience.totalReach ? (audience.totalReach > 1000000
+                        ? `${(audience.totalReach / 1000000).toFixed(1)}M`
+                        : audience.totalReach > 1000
+                        ? `${(audience.totalReach / 1000).toFixed(0)}K`
+                        : audience.totalReach.toLocaleString()) : '-'}
+                    </div>
+                  </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-colors"
-              >
-                <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
-                  <TrendingUp className="h-4 w-4 text-green-400" />
-                  Aktive Anzeigen
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
+                  >
+                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
+                      <Heart className="h-4 w-4" />
+                      Likes
+                    </div>
+                    <div className="text-3xl font-bold text-white">
+                      {advertiser.likes ? (advertiser.likes > 1000000
+                        ? `${(advertiser.likes / 1000000).toFixed(1)}M`
+                        : advertiser.likes > 1000
+                        ? `${(advertiser.likes / 1000).toFixed(0)}K`
+                        : advertiser.likes.toLocaleString()) : '-'}
+                    </div>
+                  </motion.div>
                 </div>
-                <div className="text-3xl font-bold text-green-400">{advertiser.activeAds}</div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-colors"
-              >
-                <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
-                  <Eye className="h-4 w-4" />
-                  Reichweite
-                </div>
-                <div className="text-3xl font-bold text-white">
-                  {audience.totalReach ? (audience.totalReach > 1000000
-                    ? `${(audience.totalReach / 1000000).toFixed(1)}M`
-                    : audience.totalReach > 1000
-                    ? `${(audience.totalReach / 1000).toFixed(0)}K`
-                    : audience.totalReach.toLocaleString()) : '-'}
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:bg-white/15 transition-colors"
-              >
-                <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
-                  <Heart className="h-4 w-4 text-pink-400" />
-                  Likes
-                </div>
-                <div className="text-3xl font-bold text-white">
-                  {advertiser.likes ? (advertiser.likes > 1000000
-                    ? `${(advertiser.likes / 1000000).toFixed(1)}M`
-                    : advertiser.likes > 1000
-                    ? `${(advertiser.likes / 1000).toFixed(0)}K`
-                    : advertiser.likes.toLocaleString()) : '-'}
-                </div>
-              </motion.div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )
+      })()}
 
       {/* Hauptinhalt Tabs */}
       <Tabs defaultValue="all" className="w-full">
