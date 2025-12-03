@@ -224,12 +224,12 @@ export default function AdvertiserResultsPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 border-0">
-          <CardContent className="p-8 text-white">
+        <Card className="overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600/10 via-cyan-600/10 to-blue-600/10 border-0">
+          <CardContent className="p-8">
             {/* Top Section: Profile + Info + Actions */}
             <div className="flex flex-col lg:flex-row gap-6 items-start">
               {/* Profile Photo */}
-              <div className="h-24 w-24 rounded-2xl bg-white/10 backdrop-blur-sm overflow-hidden flex-shrink-0 border border-white/20 shadow-xl">
+              <div className="h-24 w-24 rounded-2xl bg-muted overflow-hidden flex-shrink-0 border shadow-xl">
                 {advertiser.profilePhoto ? (
                   <img
                     src={advertiser.profilePhoto}
@@ -237,7 +237,7 @@ export default function AdvertiserResultsPage() {
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="h-full w-full flex items-center justify-center text-4xl font-bold bg-white/10 text-white">
+                  <div className="h-full w-full flex items-center justify-center text-4xl font-bold bg-muted text-foreground">
                     {advertiser.name.charAt(0)}
                   </div>
                 )}
@@ -246,22 +246,22 @@ export default function AdvertiserResultsPage() {
               {/* Info */}
               <div className="flex-1 space-y-3">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h1 className="text-3xl font-bold text-white">{advertiser.name}</h1>
+                  <h1 className="text-3xl font-bold">{advertiser.name}</h1>
                   {advertiser.verification === "VERIFIED" && (
-                    <Badge className="bg-white/20 text-white border border-white/30">Verifiziert</Badge>
+                    <Badge variant="secondary">Verifiziert</Badge>
                   )}
                   {fromCache && (
-                    <Badge className="bg-amber-500/30 text-white border border-amber-400/30">
+                    <Badge variant="outline" className="bg-amber-500/20 border-amber-400/50 text-amber-600">
                       <RefreshCw className="h-3 w-3 mr-1" />
                       Cache
                     </Badge>
                   )}
                 </div>
                 {advertiser.category && (
-                  <p className="font-medium text-white/80">{advertiser.category}</p>
+                  <p className="font-medium text-muted-foreground">{advertiser.category}</p>
                 )}
                 {advertiser.about && (
-                  <p className="text-white/60 text-sm line-clamp-2 max-w-2xl">{advertiser.about}</p>
+                  <p className="text-muted-foreground text-sm line-clamp-2 max-w-2xl">{advertiser.about}</p>
                 )}
                 {/* Facebook Link */}
                 {advertiser.pageUrl && (
@@ -269,7 +269,7 @@ export default function AdvertiserResultsPage() {
                     href={advertiser.pageUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
                   >
                     <ExternalLink className="h-3 w-3" />
                     Auf Facebook ansehen
@@ -281,7 +281,8 @@ export default function AdvertiserResultsPage() {
               <div className="flex flex-wrap gap-2">
                 <Button
                   size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  variant="outline"
+                  className="rounded-xl"
                   onClick={() => fetchData(true)}
                 >
                   <RefreshCw className="mr-2 h-4 w-4" />
@@ -289,7 +290,8 @@ export default function AdvertiserResultsPage() {
                 </Button>
                 <Button
                   size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  variant="outline"
+                  className="rounded-xl"
                   onClick={handleShare}
                 >
                   <Share2 className="mr-2 h-4 w-4" />
@@ -297,7 +299,8 @@ export default function AdvertiserResultsPage() {
                 </Button>
                 <Button
                   size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  variant="outline"
+                  className="rounded-xl"
                   onClick={handleSaveToWatchlist}
                   disabled={watchlistSaved}
                 >
@@ -306,7 +309,8 @@ export default function AdvertiserResultsPage() {
                 </Button>
                 <Button
                   size="sm"
-                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  variant="outline"
+                  className="rounded-xl"
                   onClick={handleExportCSV}
                 >
                   <Download className="mr-2 h-4 w-4" />
@@ -314,7 +318,7 @@ export default function AdvertiserResultsPage() {
                 </Button>
                 <Button
                   size="sm"
-                  className="rounded-xl bg-white text-blue-700 hover:bg-white/90 font-semibold transition-all"
+                  className="rounded-xl"
                 >
                   <FileText className="mr-2 h-4 w-4" />
                   Bericht
