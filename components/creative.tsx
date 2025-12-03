@@ -7,8 +7,6 @@ import {
   Bell,
   BookOpen,
   Bookmark,
-  Brush,
-  Camera,
   ChevronDown,
   Cloud,
   Code,
@@ -21,30 +19,23 @@ import {
   ImageIcon,
   Layers,
   LayoutGrid,
-  Lightbulb,
   Menu,
   MessageSquare,
-  Palette,
   PanelLeft,
-  Play,
   Plus,
   Search,
   Settings,
   Share2,
   Sparkles,
   Star,
-  Trash,
   TrendingUp,
   Users,
   Video,
-  Wand2,
   Clock,
   Eye,
   Archive,
   ArrowUpDown,
   MoreHorizontal,
-  Type,
-  CuboidIcon,
   X,
 } from "lucide-react"
 
@@ -435,8 +426,8 @@ const sidebarItems = [
 ]
 
 export function FacebookAdsAnalyzer() {
-  const [progress, setProgress] = useState(0)
-  const [notifications, setNotifications] = useState(5)
+  const [, setProgress] = useState(0)
+  const [notifications] = useState(5)
   const [activeTab, setActiveTab] = useState("home")
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
