@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Award,
@@ -345,37 +346,84 @@ const topPerformers = [
   },
 ]
 
+interface SearchHistoryItem {
+  id: string
+  advertiserName: string
+  advertiserId?: string
+  category?: string
+  totalAds?: number
+  activeAds?: number
+  searchedAt: string
+}
+
 export function FacebookAdsAnalyzer() {
   const [activeTab, setActiveTab] = useState("home")
+  const [recentSearches, setRecentSearches] = useState<SearchHistoryItem[]>([])
+  const [loadingSearches, setLoadingSearches] = useState(true)
+  const router = useRouter()
+
+  // Letzte Suchen aus der Datenbank laden
+  useEffect(() => {
+    const fetchRecentSearches = async () => {
+      try {
+        const response = await fetch("/api/search-history")
+        if (response.ok) {
+          const data = await response.json()
+          setRecentSearches(data)
+        }
+      } catch (error) {
+        console.error("Fehler beim Laden der Suchen:", error)
+      } finally {
+        setLoadingSearches(false)
+      }
+    }
+    fetchRecentSearches()
+  }, [])
+
+  // Zeitformat für "vor X Minuten/Stunden/Tagen"
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+
+    if (diffMins < 1) return "Gerade eben"
+    if (diffMins < 60) return `Vor ${diffMins} Minute${diffMins > 1 ? "n" : ""}`
+    if (diffHours < 24) return `Vor ${diffHours} Stunde${diffHours > 1 ? "n" : ""}`
+    if (diffDays < 7) return `Vor ${diffDays} Tag${diffDays > 1 ? "en" : ""}`
+    return date.toLocaleDateString("de-DE")
+  }
 
   return (
     <Tabs defaultValue="home" value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <TabsList className="grid w-full max-w-[600px] grid-cols-5 rounded-2xl p-1">
                 <TabsTrigger value="home" className="rounded-xl data-[state=active]:rounded-xl">
-                  Overview
+                  Übersicht
                 </TabsTrigger>
                 <TabsTrigger value="apps" className="rounded-xl data-[state=active]:rounded-xl">
-                  All Ads
+                  Alle Anzeigen
                 </TabsTrigger>
                 <TabsTrigger value="files" className="rounded-xl data-[state=active]:rounded-xl">
-                  Advertisers
+                  Werbetreibende
                 </TabsTrigger>
                 <TabsTrigger value="projects" className="rounded-xl data-[state=active]:rounded-xl">
-                  Campaigns
+                  Kampagnen
                 </TabsTrigger>
                 <TabsTrigger value="learn" className="rounded-xl data-[state=active]:rounded-xl">
-                  Reports
+                  Berichte
                 </TabsTrigger>
               </TabsList>
               <div className="hidden md:flex gap-2">
                 <Button variant="outline" className="rounded-2xl">
                   <Search className="mr-2 h-4 w-4" />
-                  Search Ads
+                  Suchen
                 </Button>
                 <Button className="rounded-2xl">
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Advertiser
+                  Werbetreibenden hinzufügen
                 </Button>
               </div>
             </div>
@@ -389,136 +437,71 @@ export function FacebookAdsAnalyzer() {
                 transition={{ duration: 0.2 }}
               >
                 <TabsContent value="home" className="space-y-8 mt-0">
-                  <section>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 p-8 text-white"
-                    >
-                      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-                        <div className="space-y-4">
-                          <Badge className="bg-white/20 text-white hover:bg-white/30 rounded-xl">Pro</Badge>
-                          <h2 className="text-3xl font-bold">Facebook Ads Analyzer</h2>
-                          <p className="max-w-[600px] text-white/80">
-                            Discover competitor ads, analyze strategies, and gain insights to improve your advertising campaigns.
-                          </p>
-                          <div className="flex flex-wrap gap-3">
-                            <Button className="rounded-2xl bg-white text-indigo-700 hover:bg-white/90">
-                              Search Ads
-                            </Button>
-                            <Button
-                              variant="outline"
-                              className="rounded-2xl bg-transparent border-white text-white hover:bg-white/10"
-                            >
-                              View Demo
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="hidden lg:block">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 50, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                            className="relative h-40 w-40"
-                          >
-                            <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-md" />
-                            <div className="absolute inset-4 rounded-full bg-white/20" />
-                            <div className="absolute inset-8 rounded-full bg-white/30" />
-                            <div className="absolute inset-12 rounded-full bg-white/40" />
-                            <div className="absolute inset-16 rounded-full bg-white/50" />
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </section>
+                  {/* Suchkomponente */}
+                  <AdvertiserSearch />
 
-                  <section className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-2xl font-semibold">Recent Ads</h2>
-                      <Button variant="ghost" className="rounded-2xl">
-                        View All
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                      {ads
-                        .filter((ad) => ad.recent)
-                        .map((ad) => (
-                          <motion.div key={ad.name} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                            <Card className="overflow-hidden rounded-3xl border-2 hover:border-primary/50 transition-all duration-300">
-                              <CardHeader className="pb-2">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-muted">
-                                    {ad.icon}
-                                  </div>
-                                  <Badge variant={ad.status === "active" ? "default" : "outline"} className="rounded-xl">
-                                    {ad.status === "active" ? "Active" : "Inactive"}
-                                  </Badge>
-                                </div>
-                              </CardHeader>
-                              <CardContent className="pb-2">
-                                <CardTitle className="text-lg">{ad.name}</CardTitle>
-                                <CardDescription>{ad.description}</CardDescription>
-                              </CardContent>
-                              <CardFooter>
-                                <Button variant="secondary" className="w-full rounded-2xl">
-                                  View Details
-                                </Button>
-                              </CardFooter>
-                            </Card>
-                          </motion.div>
-                        ))}
-                    </div>
-                  </section>
-
+                  {/* Letzte Suchen */}
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     <section className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-semibold">Saved Advertisers</h2>
-                        <Button variant="ghost" className="rounded-2xl">
-                          View All
+                        <h2 className="text-2xl font-semibold">Letzte Suchen</h2>
+                        <Button variant="ghost" className="rounded-2xl" onClick={() => setActiveTab("files")}>
+                          Alle anzeigen
                         </Button>
                       </div>
                       <div className="rounded-3xl border">
                         <div className="grid grid-cols-1 divide-y">
-                          {savedAdvertisers.slice(0, 4).map((advertiser) => (
-                            <motion.div
-                              key={advertiser.name}
-                              whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                              className="flex items-center justify-between p-4"
-                            >
-                              <div className="flex items-center gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-muted">
-                                  {advertiser.icon}
+                          {loadingSearches ? (
+                            <div className="p-8 text-center text-muted-foreground">
+                              Lade Suchen...
+                            </div>
+                          ) : recentSearches.length === 0 ? (
+                            <div className="p-8 text-center text-muted-foreground">
+                              <Search className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                              <p>Noch keine Suchen vorhanden</p>
+                              <p className="text-sm">Suche nach einem Werbetreibenden, um zu starten</p>
+                            </div>
+                          ) : (
+                            recentSearches.slice(0, 5).map((search) => (
+                              <motion.div
+                                key={search.id}
+                                whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                                className="flex items-center justify-between p-4 cursor-pointer"
+                                onClick={() => router.push(`/dashboard/advertiser/${encodeURIComponent(search.advertiserName)}`)}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold">
+                                    {search.advertiserName.charAt(0)}
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{search.advertiserName}</p>
+                                    <p className="text-sm text-muted-foreground">
+                                      {search.category || "Werbetreibender"} • {formatTimeAgo(search.searchedAt)}
+                                    </p>
+                                  </div>
                                 </div>
-                                <div>
-                                  <p className="font-medium">{advertiser.name}</p>
-                                  <p className="text-sm text-muted-foreground">
-                                    {advertiser.category} • {advertiser.modified}
-                                  </p>
+                                <div className="flex items-center gap-2">
+                                  {search.activeAds && (
+                                    <Badge variant="outline" className="rounded-xl">
+                                      {search.activeAds} aktiv
+                                    </Badge>
+                                  )}
+                                  <Button variant="ghost" size="sm" className="rounded-xl">
+                                    Ansehen
+                                  </Button>
                                 </div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                {advertiser.tracked && (
-                                  <Badge variant="outline" className="rounded-xl">
-                                    <Eye className="mr-1 h-3 w-3" />
-                                    Tracked
-                                  </Badge>
-                                )}
-                                <Button variant="ghost" size="sm" className="rounded-xl">
-                                  View
-                                </Button>
-                              </div>
-                            </motion.div>
-                          ))}
+                              </motion.div>
+                            ))
+                          )}
                         </div>
                       </div>
                     </section>
 
                     <section className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h2 className="text-2xl font-semibold">Active Campaigns</h2>
-                        <Button variant="ghost" className="rounded-2xl">
-                          View All
+                        <h2 className="text-2xl font-semibold">Aktive Kampagnen</h2>
+                        <Button variant="ghost" className="rounded-2xl" onClick={() => setActiveTab("projects")}>
+                          Alle anzeigen
                         </Button>
                       </div>
                       <div className="rounded-3xl border">
@@ -532,13 +515,13 @@ export function FacebookAdsAnalyzer() {
                               <div className="flex items-center justify-between mb-2">
                                 <h3 className="font-medium">{campaign.name}</h3>
                                 <Badge variant="outline" className="rounded-xl">
-                                  Due {campaign.dueDate}
+                                  Fällig {campaign.dueDate}
                                 </Badge>
                               </div>
                               <p className="text-sm text-muted-foreground mb-3">{campaign.description}</p>
                               <div className="space-y-2">
                                 <div className="flex items-center justify-between text-sm">
-                                  <span>Progress</span>
+                                  <span>Fortschritt</span>
                                   <span>{campaign.progress}%</span>
                                 </div>
                                 <Progress value={campaign.progress} className="h-2 rounded-xl" />
@@ -546,11 +529,11 @@ export function FacebookAdsAnalyzer() {
                               <div className="flex items-center justify-between mt-3 text-sm text-muted-foreground">
                                 <div className="flex items-center">
                                   <Layers className="mr-1 h-4 w-4" />
-                                  {campaign.adsCount} ads
+                                  {campaign.adsCount} Anzeigen
                                 </div>
                                 <div className="flex items-center">
                                   <TrendingUp className="mr-1 h-4 w-4" />
-                                  {campaign.totalReach.toLocaleString()} reach
+                                  {campaign.totalReach.toLocaleString()} Reichweite
                                 </div>
                               </div>
                             </motion.div>
@@ -562,9 +545,9 @@ export function FacebookAdsAnalyzer() {
 
                   <section className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h2 className="text-2xl font-semibold">Top Performers</h2>
+                      <h2 className="text-2xl font-semibold">Top Performer</h2>
                       <Button variant="ghost" className="rounded-2xl">
-                        Explore
+                        Erkunden
                       </Button>
                     </div>
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -580,7 +563,7 @@ export function FacebookAdsAnalyzer() {
                             </div>
                             <CardContent className="p-4">
                               <h3 className="font-semibold">{ad.title}</h3>
-                              <p className="text-sm text-muted-foreground">by {ad.advertiser}</p>
+                              <p className="text-sm text-muted-foreground">von {ad.advertiser}</p>
                               <div className="mt-2 flex items-center justify-between text-sm">
                                 <div className="flex items-center gap-2">
                                   <Eye className="h-4 w-4 text-blue-500" />

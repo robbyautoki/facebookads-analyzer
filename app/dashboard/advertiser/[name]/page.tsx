@@ -48,13 +48,31 @@ export default function AdvertiserResultsPage() {
       const result = await response.json()
 
       if (!result.success) {
-        setError(result.error || "Failed to fetch ads")
+        setError(result.error || "Fehler beim Abrufen der Werbeanzeigen")
         return
       }
 
       setData(result.data)
+
+      // Suche in der Datenbank speichern
+      try {
+        await fetch("/api/search-history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            advertiserName: result.data.advertiser.name,
+            advertiserId: result.data.advertiser.id,
+            category: result.data.advertiser.category,
+            totalAds: result.data.advertiser.totalAds,
+            activeAds: result.data.advertiser.activeAds,
+          }),
+        })
+      } catch {
+        // Fehler beim Speichern ignorieren - Hauptfunktion soll weiterlaufen
+        console.error("Fehler beim Speichern der Suche")
+      }
     } catch {
-      setError("Network error. Please try again.")
+      setError("Netzwerkfehler. Bitte versuche es erneut.")
     } finally {
       setLoading(false)
     }
@@ -126,7 +144,7 @@ export default function AdvertiserResultsPage() {
     }
   }
 
-  // Loading state
+  // Ladezustand
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-6">
@@ -137,20 +155,20 @@ export default function AdvertiserResultsPage() {
           <Loader2 className="h-16 w-16 text-primary" />
         </motion.div>
         <div className="text-center space-y-2">
-          <h2 className="text-2xl font-semibold">Analyzing Ads for &quot;{advertiserName}&quot;</h2>
+          <h2 className="text-2xl font-semibold">Analysiere Werbung für &quot;{advertiserName}&quot;</h2>
           <p className="text-muted-foreground">
-            This may take a few minutes. We&apos;re scanning the Facebook Ads Library...
+            Das kann einige Minuten dauern. Wir durchsuchen die Facebook Ads Library...
           </p>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-          Scraping in progress
+          Daten werden abgerufen
         </div>
       </div>
     )
   }
 
-  // Error state
+  // Fehlerzustand
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-6">
@@ -158,17 +176,17 @@ export default function AdvertiserResultsPage() {
           <AlertCircle className="h-8 w-8 text-red-600" />
         </div>
         <div className="text-center space-y-2">
-          <h2 className="text-2xl font-semibold">Unable to fetch ads</h2>
+          <h2 className="text-2xl font-semibold">Werbung konnte nicht abgerufen werden</h2>
           <p className="text-muted-foreground max-w-md">{error}</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline" onClick={() => router.back()}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Go Back
+            Zurück
           </Button>
           <Button onClick={fetchData}>
             <RefreshCw className="mr-2 h-4 w-4" />
-            Try Again
+            Erneut versuchen
           </Button>
         </div>
       </div>
@@ -183,10 +201,10 @@ export default function AdvertiserResultsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Back button */}
+      {/* Zurück-Button */}
       <Button variant="ghost" onClick={() => router.back()} className="rounded-2xl">
         <ArrowLeft className="mr-2 h-4 w-4" />
-        Back to Search
+        Zurück zur Suche
       </Button>
 
       {/* Advertiser Header */}
@@ -218,7 +236,7 @@ export default function AdvertiserResultsPage() {
                 <div className="flex items-center gap-3 flex-wrap">
                   <h1 className="text-3xl font-bold">{advertiser.name}</h1>
                   {advertiser.verification === "VERIFIED" && (
-                    <Badge className="bg-blue-500">Verified</Badge>
+                    <Badge className="bg-blue-500">Verifiziert</Badge>
                   )}
                 </div>
                 {advertiser.category && (
@@ -231,12 +249,12 @@ export default function AdvertiserResultsPage() {
                   {advertiser.likes && (
                     <span className="text-white/70">{advertiser.likes.toLocaleString()} Likes</span>
                   )}
-                  <span className="text-white/70">{advertiser.totalAds} Total Ads</span>
-                  <span className="text-green-400">{advertiser.activeAds} Active</span>
+                  <span className="text-white/70">{advertiser.totalAds} Werbeanzeigen</span>
+                  <span className="text-green-400">{advertiser.activeAds} Aktiv</span>
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* Aktions-Buttons */}
               <div className="flex flex-wrap gap-2">
                 <Button
                   variant="outline"
@@ -244,7 +262,7 @@ export default function AdvertiserResultsPage() {
                   onClick={handleShare}
                 >
                   <Share2 className="mr-2 h-4 w-4" />
-                  Share
+                  Teilen
                 </Button>
                 <Button
                   variant="outline"
@@ -253,7 +271,7 @@ export default function AdvertiserResultsPage() {
                   disabled={watchlistSaved}
                 >
                   <Bookmark className={`mr-2 h-4 w-4 ${watchlistSaved ? "fill-current" : ""}`} />
-                  {watchlistSaved ? "Saved" : "Save"}
+                  {watchlistSaved ? "Gespeichert" : "Speichern"}
                 </Button>
                 <Button
                   variant="outline"
@@ -261,16 +279,16 @@ export default function AdvertiserResultsPage() {
                   onClick={handleExportCSV}
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  Export CSV
+                  CSV Export
                 </Button>
                 <Button className="rounded-2xl bg-white text-slate-900 hover:bg-white/90">
                   <FileText className="mr-2 h-4 w-4" />
-                  Generate Report
+                  Bericht erstellen
                 </Button>
               </div>
             </div>
 
-            {/* View on Facebook */}
+            {/* Auf Facebook ansehen */}
             {advertiser.pageUrl && (
               <a
                 href={advertiser.pageUrl}
@@ -278,7 +296,7 @@ export default function AdvertiserResultsPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-4 text-sm text-white/60 hover:text-white transition-colors"
               >
-                View on Facebook
+                Auf Facebook ansehen
                 <ExternalLink className="h-3 w-3" />
               </a>
             )}
@@ -286,20 +304,20 @@ export default function AdvertiserResultsPage() {
         </Card>
       </motion.div>
 
-      {/* Main Content Tabs */}
+      {/* Hauptinhalt Tabs */}
       <Tabs defaultValue="all" className="w-full">
         <TabsList className="grid w-full max-w-md grid-cols-4 rounded-2xl p-1">
           <TabsTrigger value="all" className="rounded-xl">
-            All ({ads.length})
+            Alle ({ads.length})
           </TabsTrigger>
           <TabsTrigger value="active" className="rounded-xl">
-            Active ({activeAds.length})
+            Aktiv ({activeAds.length})
           </TabsTrigger>
           <TabsTrigger value="inactive" className="rounded-xl">
-            Inactive ({inactiveAds.length})
+            Inaktiv ({inactiveAds.length})
           </TabsTrigger>
           <TabsTrigger value="insights" className="rounded-xl">
-            Insights
+            Einblicke
           </TabsTrigger>
         </TabsList>
 
@@ -314,7 +332,7 @@ export default function AdvertiserResultsPage() {
         <TabsContent value="active" className="mt-6">
           {activeAds.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              No active ads found
+              Keine aktiven Werbeanzeigen gefunden
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -328,7 +346,7 @@ export default function AdvertiserResultsPage() {
         <TabsContent value="inactive" className="mt-6">
           {inactiveAds.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              No inactive ads found
+              Keine inaktiven Werbeanzeigen gefunden
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">

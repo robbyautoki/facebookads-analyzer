@@ -29,7 +29,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
-// Sidebar navigation items
+// Sidebar Navigations-Elemente
 const sidebarItems = [
   {
     title: "Dashboard",
@@ -37,62 +37,62 @@ const sidebarItems = [
     isActive: true,
   },
   {
-    title: "Ad Library",
+    title: "Werbeanzeigen",
     icon: <Grid className="h-5 w-5" />,
     badge: "12",
     items: [
-      { title: "All Ads", url: "#" },
-      { title: "Video Ads", url: "#" },
-      { title: "Image Ads", url: "#", badge: "8" },
-      { title: "Carousel Ads", url: "#" },
+      { title: "Alle Anzeigen", url: "#" },
+      { title: "Video Anzeigen", url: "#" },
+      { title: "Bild Anzeigen", url: "#", badge: "8" },
+      { title: "Karussell Anzeigen", url: "#" },
     ],
   },
   {
-    title: "Advertisers",
+    title: "Werbetreibende",
     icon: <Users className="h-5 w-5" />,
     items: [
-      { title: "Saved", url: "#", badge: "7" },
-      { title: "Tracked", url: "#" },
-      { title: "Recently Viewed", url: "#" },
-      { title: "Top Performers", url: "#" },
+      { title: "Gespeichert", url: "#", badge: "7" },
+      { title: "Verfolgt", url: "#" },
+      { title: "Kürzlich angesehen", url: "#" },
+      { title: "Top Performer", url: "#" },
     ],
   },
   {
-    title: "Campaigns",
+    title: "Kampagnen",
     icon: <Layers className="h-5 w-5" />,
     badge: "4",
     items: [
-      { title: "Active Campaigns", url: "#", badge: "4" },
-      { title: "Completed", url: "#" },
-      { title: "Templates", url: "#" },
+      { title: "Aktive Kampagnen", url: "#", badge: "4" },
+      { title: "Abgeschlossen", url: "#" },
+      { title: "Vorlagen", url: "#" },
     ],
   },
   {
-    title: "Analytics",
+    title: "Analysen",
     icon: <TrendingUp className="h-5 w-5" />,
     items: [
       { title: "Performance", url: "#" },
-      { title: "Audience Insights", url: "#" },
-      { title: "Competitor Analysis", url: "#" },
+      { title: "Zielgruppen Einblicke", url: "#" },
+      { title: "Wettbewerbsanalyse", url: "#" },
       { title: "Trends", url: "#" },
     ],
   },
   {
-    title: "Reports",
+    title: "Berichte",
     icon: <FileText className="h-5 w-5" />,
     items: [
-      { title: "Generated Reports", url: "#" },
-      { title: "Scheduled", url: "#" },
-      { title: "Export History", url: "#" },
+      { title: "Erstellte Berichte", url: "#" },
+      { title: "Geplant", url: "#" },
+      { title: "Export Verlauf", url: "#" },
     ],
   },
   {
-    title: "Saved Searches",
+    title: "Gespeicherte Suchen",
     icon: <Bookmark className="h-5 w-5" />,
     items: [
-      { title: "Recent Searches", url: "#" },
-      { title: "Saved Filters", url: "#" },
-      { title: "Watchlists", url: "#" },
+      { title: "Letzte Suchen", url: "#" },
+      { title: "Gespeicherte Filter", url: "#" },
+      { title: "Beobachtungslisten", url: "#" },
     ],
   },
 ]
@@ -149,7 +149,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <TrendingUp className="size-5" />
               </div>
               <div>
-                <h2 className="font-semibold">Quick Actions</h2>
+                <h2 className="font-semibold">Schnellzugriff</h2>
                 <p className="text-xs text-muted-foreground">Navigation</p>
               </div>
             </div>
@@ -161,7 +161,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="px-3 py-2">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search..." className="w-full rounded-2xl bg-muted pl-9 pr-4 py-2" />
+              <Input type="search" placeholder="Suchen..." className="w-full rounded-2xl bg-muted pl-9 pr-4 py-2" />
             </div>
           </div>
 
@@ -222,7 +222,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="space-y-1">
               <button className="flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
                 <Settings className="h-5 w-5" />
-                <span>Settings</span>
+                <span>Einstellungen</span>
               </button>
             </div>
           </div>
@@ -244,7 +244,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
               {sidebarOpen && (
                 <div>
-                  <h2 className="font-semibold">Quick Actions</h2>
+                  <h2 className="font-semibold">Schnellzugriff</h2>
                   <p className="text-xs text-muted-foreground">Navigation</p>
                 </div>
               )}
@@ -255,7 +255,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="px-3 py-2">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search..." className="w-full rounded-2xl bg-muted pl-9 pr-4 py-2" />
+                <Input type="search" placeholder="Suchen..." className="w-full rounded-2xl bg-muted pl-9 pr-4 py-2" />
               </div>
             </div>
           )}
@@ -331,10 +331,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                       !sidebarOpen && "justify-center"
                     )}>
                       <Settings className="h-5 w-5" />
-                      {sidebarOpen && <span className="ml-3">Settings</span>}
+                      {sidebarOpen && <span className="ml-3">Einstellungen</span>}
                     </button>
                   </TooltipTrigger>
-                  {!sidebarOpen && <TooltipContent side="right">Settings</TooltipContent>}
+                  {!sidebarOpen && <TooltipContent side="right">Einstellungen</TooltipContent>}
                 </Tooltip>
               </TooltipProvider>
             </div>
@@ -342,7 +342,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Hauptinhalt */}
       <div className={cn("min-h-screen transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-16")}>
         <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-background/95 px-4 backdrop-blur">
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
@@ -361,7 +361,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                       <Cloud className="h-5 w-5" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Cloud Storage</TooltipContent>
+                  <TooltipContent>Cloud Speicher</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
@@ -372,7 +372,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                       <MessageSquare className="h-5 w-5" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Messages</TooltipContent>
+                  <TooltipContent>Nachrichten</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
@@ -388,7 +388,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                       )}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Notifications</TooltipContent>
+                  <TooltipContent>Benachrichtigungen</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 

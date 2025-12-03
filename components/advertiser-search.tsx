@@ -147,7 +147,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
         {advertisers.length > 0 && (
           <div className="p-2">
             <div className="px-3 py-2 text-xs font-medium text-slate-500 uppercase tracking-wider">
-              Advertisers
+              Werbetreibende
             </div>
             {advertisers.map((advertiser, index) => (
               <button
@@ -174,7 +174,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
                   <div className="flex items-center gap-3 text-sm text-slate-500">
                     <span className="flex items-center gap-1">
                       <Building2 className="h-3 w-3" />
-                      {formatAdsCount(advertiser.ads_count)} ads
+                      {formatAdsCount(advertiser.ads_count)} Anzeigen
                     </span>
                     <Badge variant="outline" className="text-xs rounded-lg">
                       {advertiser.region}
@@ -226,7 +226,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
           <Input
             ref={inputRef}
             type="search"
-            placeholder="Search advertiser name..."
+            placeholder="Werbetreibenden suchen..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -238,7 +238,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
           )}
         </div>
         <Button type="submit" disabled={isLoading || !searchQuery.trim()} className="rounded-2xl">
-          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Search"}
+          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Suchen"}
         </Button>
         <AnimatePresence>{renderDropdown()}</AnimatePresence>
       </form>
@@ -255,9 +255,9 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
         <CardContent className="p-8 text-white">
           <div className="space-y-6">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold">Search Facebook Ads</h2>
+              <h2 className="text-3xl font-bold">Facebook Werbung durchsuchen</h2>
               <p className="text-white/80 max-w-xl">
-                Enter an advertiser name to discover their Facebook ads, analyze their strategies, and gain competitive insights.
+                Gib einen Werbetreibenden ein, um dessen Facebook Werbeanzeigen zu entdecken, Strategien zu analysieren und Wettbewerbseinblicke zu gewinnen.
               </p>
             </div>
 
@@ -267,7 +267,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
                 <Input
                   ref={inputRef}
                   type="search"
-                  placeholder="Enter advertiser name (e.g., Tesla, Nike, Apple...)"
+                  placeholder="Werbetreibenden eingeben (z.B. Tesla, Nike, Apple...)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -287,11 +287,11 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Searching...
+                    Suche läuft...
                   </>
                 ) : (
                   <>
-                    Analyze Ads
+                    Werbung analysieren
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </>
                 )}
@@ -299,7 +299,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
             </form>
 
             <div className="flex flex-wrap gap-2 text-sm">
-              <span className="text-white/60">Popular searches:</span>
+              <span className="text-white/60">Beliebte Suchen:</span>
               {["Tesla", "Nike", "Apple", "Shopify", "Amazon"].map((name) => (
                 <button
                   key={name}
