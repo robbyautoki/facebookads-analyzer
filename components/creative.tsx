@@ -40,7 +40,6 @@ import {
 } from "lucide-react"
 
 import { UserButton } from "@clerk/nextjs"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -557,18 +556,6 @@ export function FacebookAdsAnalyzer() {
                 <Settings className="h-5 w-5" />
                 <span>Settings</span>
               </button>
-              <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <span>John Doe</span>
-                </div>
-                <Badge variant="outline" className="ml-auto">
-                  Pro
-                </Badge>
-              </button>
             </div>
           </div>
         </div>
@@ -577,108 +564,118 @@ export function FacebookAdsAnalyzer() {
       {/* Sidebar - Desktop */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-30 hidden w-64 transform border-r bg-background transition-transform duration-300 ease-in-out md:block",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-30 hidden border-r bg-background transition-all duration-300 ease-in-out md:block",
+          sidebarOpen ? "w-64" : "w-16",
         )}
       >
         <div className="flex h-full flex-col">
-          <div className="p-4">
+          <div className={cn("p-4", !sidebarOpen && "flex justify-center")}>
             <div className="flex items-center gap-3">
               <div className="flex aspect-square size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white">
                 <TrendingUp className="size-5" />
               </div>
-              <div>
-                <h2 className="font-semibold">Quick Actions</h2>
-                <p className="text-xs text-muted-foreground">Navigation</p>
-              </div>
+              {sidebarOpen && (
+                <div>
+                  <h2 className="font-semibold">Quick Actions</h2>
+                  <p className="text-xs text-muted-foreground">Navigation</p>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="px-3 py-2">
-            <div className="relative">
-              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input type="search" placeholder="Search..." className="w-full rounded-2xl bg-muted pl-9 pr-4 py-2" />
+          {sidebarOpen && (
+            <div className="px-3 py-2">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input type="search" placeholder="Search..." className="w-full rounded-2xl bg-muted pl-9 pr-4 py-2" />
+              </div>
             </div>
-          </div>
+          )}
 
           <ScrollArea className="flex-1 px-3 py-2">
             <div className="space-y-1">
               {sidebarItems.map((item) => (
-                <div key={item.title} className="mb-1">
-                  <button
-                    className={cn(
-                      "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      item.isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
-                    )}
-                    onClick={() => item.items && toggleExpanded(item.title)}
-                  >
-                    <div className="flex items-center gap-3">
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </div>
-                    {item.badge && (
-                      <Badge variant="outline" className="ml-auto rounded-full px-2 py-0.5 text-xs">
-                        {item.badge}
-                      </Badge>
-                    )}
-                    {item.items && (
-                      <ChevronDown
-                        className={cn(
-                          "ml-2 h-4 w-4 transition-transform",
-                          expandedItems[item.title] ? "rotate-180" : "",
-                        )}
-                      />
-                    )}
-                  </button>
-
-                  {item.items && expandedItems[item.title] && (
-                    <div className="mt-1 ml-6 space-y-1 border-l pl-3">
-                      {item.items.map((subItem) => (
-                        <a
-                          key={subItem.title}
-                          href={subItem.url}
-                          className="flex items-center justify-between rounded-2xl px-3 py-2 text-sm hover:bg-muted"
+                <TooltipProvider key={item.title}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="mb-1">
+                        <button
+                          className={cn(
+                            "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
+                            item.isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
+                            !sidebarOpen && "justify-center",
+                          )}
+                          onClick={() => item.items && sidebarOpen && toggleExpanded(item.title)}
                         >
-                          {subItem.title}
-                          {subItem.badge && (
+                          <div className={cn("flex items-center", sidebarOpen && "gap-3")}>
+                            {item.icon}
+                            {sidebarOpen && <span>{item.title}</span>}
+                          </div>
+                          {sidebarOpen && item.badge && (
                             <Badge variant="outline" className="ml-auto rounded-full px-2 py-0.5 text-xs">
-                              {subItem.badge}
+                              {item.badge}
                             </Badge>
                           )}
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                          {sidebarOpen && item.items && (
+                            <ChevronDown
+                              className={cn(
+                                "ml-2 h-4 w-4 transition-transform",
+                                expandedItems[item.title] ? "rotate-180" : "",
+                              )}
+                            />
+                          )}
+                        </button>
+
+                        {sidebarOpen && item.items && expandedItems[item.title] && (
+                          <div className="mt-1 ml-6 space-y-1 border-l pl-3">
+                            {item.items.map((subItem) => (
+                              <a
+                                key={subItem.title}
+                                href={subItem.url}
+                                className="flex items-center justify-between rounded-2xl px-3 py-2 text-sm hover:bg-muted"
+                              >
+                                {subItem.title}
+                                {subItem.badge && (
+                                  <Badge variant="outline" className="ml-auto rounded-full px-2 py-0.5 text-xs">
+                                    {subItem.badge}
+                                  </Badge>
+                                )}
+                              </a>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </TooltipTrigger>
+                    {!sidebarOpen && <TooltipContent side="right">{item.title}</TooltipContent>}
+                  </Tooltip>
+                </TooltipProvider>
               ))}
             </div>
           </ScrollArea>
 
           <div className="border-t p-3">
             <div className="space-y-1">
-              <button className="flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <Settings className="h-5 w-5" />
-                <span>Settings</span>
-              </button>
-              <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <span>John Doe</span>
-                </div>
-                <Badge variant="outline" className="ml-auto">
-                  Pro
-                </Badge>
-              </button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button className={cn(
+                      "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted",
+                      !sidebarOpen && "justify-center"
+                    )}>
+                      <Settings className="h-5 w-5" />
+                      {sidebarOpen && <span className="ml-3">Settings</span>}
+                    </button>
+                  </TooltipTrigger>
+                  {!sidebarOpen && <TooltipContent side="right">Settings</TooltipContent>}
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className={cn("min-h-screen transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-0")}>
+      <div className={cn("min-h-screen transition-all duration-300 ease-in-out", sidebarOpen ? "md:pl-64" : "md:pl-16")}>
         <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b bg-background/95 px-4 backdrop-blur">
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
             <Menu className="h-5 w-5" />
