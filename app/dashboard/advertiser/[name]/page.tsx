@@ -13,10 +13,6 @@ import {
   AlertCircle,
   RefreshCw,
   ExternalLink,
-  TrendingUp,
-  Eye,
-  Heart,
-  BarChart3,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -25,6 +21,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { AdCard } from "@/components/ad-card"
 import { AudienceInsights } from "@/components/audience-insights"
 import { AdDetailModal } from "@/components/ad-detail-modal"
+import {
+  StatisticsAdsCard,
+  StatisticsActiveCard,
+  StatisticsReachCard,
+  StatisticsLikesCard,
+} from "@/components/statistics"
 import type { AdvertiserAnalysis, SimpleAd } from "@/types/ads"
 
 // Akzentfarbe basierend auf Kategorie (für Border und dezente Highlights)
@@ -377,70 +379,38 @@ export default function AdvertiserResultsPage() {
                   </div>
                 </div>
 
-                {/* Statistics Cards */}
+                {/* Statistics Cards with Charts */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
                   >
-                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
-                      <BarChart3 className="h-4 w-4" />
-                      Anzeigen gesamt
-                    </div>
-                    <div className="text-3xl font-bold text-white">{advertiser.totalAds}</div>
+                    <StatisticsAdsCard totalAds={advertiser.totalAds} />
                   </motion.div>
 
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
                   >
-                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
-                      <TrendingUp className="h-4 w-4" />
-                      Aktive Anzeigen
-                    </div>
-                    <div className="text-3xl font-bold text-white">{advertiser.activeAds}</div>
+                    <StatisticsActiveCard activeAds={advertiser.activeAds} />
                   </motion.div>
 
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
                   >
-                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
-                      <Eye className="h-4 w-4" />
-                      Reichweite
-                    </div>
-                    <div className="text-3xl font-bold text-white">
-                      {audience.totalReach ? (audience.totalReach > 1000000
-                        ? `${(audience.totalReach / 1000000).toFixed(1)}M`
-                        : audience.totalReach > 1000
-                        ? `${(audience.totalReach / 1000).toFixed(0)}K`
-                        : audience.totalReach.toLocaleString()) : '-'}
-                    </div>
+                    <StatisticsReachCard reach={audience.totalReach} />
                   </motion.div>
 
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors"
                   >
-                    <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
-                      <Heart className="h-4 w-4" />
-                      Likes
-                    </div>
-                    <div className="text-3xl font-bold text-white">
-                      {advertiser.likes ? (advertiser.likes > 1000000
-                        ? `${(advertiser.likes / 1000000).toFixed(1)}M`
-                        : advertiser.likes > 1000
-                        ? `${(advertiser.likes / 1000).toFixed(0)}K`
-                        : advertiser.likes.toLocaleString()) : '-'}
-                    </div>
+                    <StatisticsLikesCard likes={advertiser.likes} />
                   </motion.div>
                 </div>
               </CardContent>
