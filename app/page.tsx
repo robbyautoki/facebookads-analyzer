@@ -4,6 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight, BarChart3, Eye, Search, Target, TrendingUp, Users, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import HeroSection from "@/components/shadcn-studio/blocks/hero-section-31/hero-section-31"
 
 const features = [
   {
@@ -73,40 +74,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-sm mb-8">
-            <span className="inline-block h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-            Live tracking across all platforms
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
-            Discover Winning
-            <br />
-            Facebook Ads
-          </h1>
-          <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-10">
-            Analyze competitor ads, track advertisers, and uncover the strategies behind
-            successful Facebook campaigns. Make data-driven decisions for your marketing.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/sign-up">
-              <Button size="lg" className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-lg px-8">
-                Start Free Trial
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/sign-in">
-              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-lg px-8">
-                Sign In
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
-      </section>
+      <HeroSection />
 
       {/* Stats Section */}
       <section className="container mx-auto px-4 py-16">
