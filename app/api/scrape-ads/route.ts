@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { auth } from '@clerk/nextjs/server'
+import { prisma } from '@/lib/prisma'
 import type {
   FacebookAd,
   ScrapeAdsRequest,
@@ -12,6 +14,7 @@ import type {
 } from '@/types/ads'
 
 const APIFY_API_TOKEN = process.env.APIFY_API_TOKEN
+const CACHE_DURATION_MS = 24 * 60 * 60 * 1000 // 24 Stunden
 const APIFY_ACTOR_ID = 'curious_coder~facebook-ads-library-scraper'
 const APIFY_BASE_URL = 'https://api.apify.com/v2'
 
@@ -137,7 +140,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ScrapeAds
     }
 
     const body: ScrapeAdsRequest = await request.json()
-    const { advertiserName, period = 'last30d', countryCode = 'ALL', limit = 100 } = body
+    const { advertiserName, period = 'last30d', countryCode = 'ALL', limit = 100, forceRefresh = false } = body
 
     if (!advertiserName || advertiserName.trim().length === 0) {
       return NextResponse.json(
@@ -145,6 +148,44 @@ export async function POST(request: NextRequest): Promise<NextResponse<ScrapeAds
         { status: 400 }
       )
     }
+
+    // Prüfe Cache in der Datenbank (nur wenn nicht forceRefresh)
+    if (!forceRefresh) {
+      const { userId } = await auth()
+
+      if (userId) {
+        const cached = await prisma.searchHistory.findFirst({
+          where: {
+            userId,
+            advertiserName: {
+              equals: advertiserName.trim(),
+              mode: 'insensitive',
+            },
+            cachedData: { not: null },
+            cachedAt: {
+              gte: new Date(Date.now() - CACHE_DURATION_MS),
+            },
+          },
+          orderBy: { cachedAt: 'desc' },
+        })
+
+        if (cached?.cachedData) {
+          console.log(`Cache hit for "${advertiserName}"`)
+          // Update searchedAt timestamp
+          await prisma.searchHistory.update({
+            where: { id: cached.id },
+            data: { searchedAt: new Date() },
+          })
+          return NextResponse.json({
+            success: true,
+            data: cached.cachedData as AdvertiserAnalysis,
+            fromCache: true,
+          })
+        }
+      }
+    }
+
+    console.log(`Cache miss for "${advertiserName}", fetching from API...`)
 
     // Build Facebook Ads Library URL
     const encodedName = encodeURIComponent(advertiserName.trim())

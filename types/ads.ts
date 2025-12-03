@@ -286,10 +286,12 @@ export interface ScrapeAdsRequest {
   period?: 'last24h' | 'last7d' | 'last30d' | 'last90d' | 'all'
   countryCode?: string
   limit?: number
+  forceRefresh?: boolean // Cache ignorieren und neu laden
 }
 
 export interface ScrapeAdsResponse {
   success: boolean
   data?: AdvertiserAnalysis
   error?: string
+  fromCache?: boolean // Zeigt an ob Daten aus Cache kommen
 }

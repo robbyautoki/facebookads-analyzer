@@ -8,15 +8,20 @@ datasource db {
 }
 
 model SearchHistory {
-  id             String   @id @default(cuid())
-  userId         String   // Clerk User ID
+  id             String    @id @default(cuid())
+  userId         String    // Clerk User ID
   advertiserName String
   advertiserId   String?
   category       String?
   totalAds       Int?
   activeAds      Int?
-  searchedAt     DateTime @default(now())
+  searchedAt     DateTime  @default(now())
+
+  // Cached API response
+  cachedData     Json?     // Komplette Ads-Daten als JSON
+  cachedAt       DateTime? // Wann gecached wurde
 
   @@index([userId])
   @@index([searchedAt])
+  @@index([userId, advertiserName])
 }

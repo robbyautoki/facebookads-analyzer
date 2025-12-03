@@ -33,16 +33,18 @@ export default function AdvertiserResultsPage() {
   const [error, setError] = useState<string | null>(null)
   const [selectedAd, setSelectedAd] = useState<SimpleAd | null>(null)
   const [watchlistSaved, setWatchlistSaved] = useState(false)
+  const [fromCache, setFromCache] = useState(false)
 
-  const fetchData = async () => {
+  const fetchData = async (forceRefresh = false) => {
     setLoading(true)
     setError(null)
+    setFromCache(false)
 
     try {
       const response = await fetch("/api/scrape-ads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ advertiserName }),
+        body: JSON.stringify({ advertiserName, forceRefresh }),
       })
 
       const result = await response.json()
@@ -53,8 +55,9 @@ export default function AdvertiserResultsPage() {
       }
 
       setData(result.data)
+      setFromCache(result.fromCache || false)
 
-      // Suche in der Datenbank speichern
+      // Suche in der Datenbank speichern (mit Cache-Daten wenn nicht aus Cache)
       try {
         await fetch("/api/search-history", {
           method: "POST",
@@ -65,6 +68,8 @@ export default function AdvertiserResultsPage() {
             category: result.data.advertiser.category,
             totalAds: result.data.advertiser.totalAds,
             activeAds: result.data.advertiser.activeAds,
+            // Nur cachen wenn frisch von der API (nicht aus Cache)
+            ...(result.fromCache ? {} : { cachedData: result.data }),
           }),
         })
       } catch {
@@ -184,7 +189,7 @@ export default function AdvertiserResultsPage() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Zurück
           </Button>
-          <Button onClick={fetchData}>
+          <Button onClick={() => fetchData(true)}>
             <RefreshCw className="mr-2 h-4 w-4" />
             Erneut versuchen
           </Button>
@@ -251,6 +256,15 @@ export default function AdvertiserResultsPage() {
                   )}
                   <span className="text-white/70">{advertiser.totalAds} Werbeanzeigen</span>
                   <span className="text-green-400">{advertiser.activeAds} Aktiv</span>
+                  {fromCache && (
+                    <button
+                      onClick={() => fetchData(true)}
+                      className="text-yellow-400 hover:text-yellow-300 flex items-center gap-1 transition-colors"
+                    >
+                      <RefreshCw className="h-3 w-3" />
+                      Aus Cache - Aktualisieren
+                    </button>
+                  )}
                 </div>
               </div>
 

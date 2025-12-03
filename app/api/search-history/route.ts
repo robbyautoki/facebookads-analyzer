@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { advertiserName, advertiserId, category, totalAds, activeAds } = body
+    const { advertiserName, advertiserId, category, totalAds, activeAds, cachedData } = body
 
     if (!advertiserName) {
       return NextResponse.json(
@@ -44,27 +44,32 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Prüfen ob diese Suche kürzlich schon existiert (letzte 5 Minuten)
-    const recentSearch = await prisma.searchHistory.findFirst({
+    // Prüfen ob diese Suche schon existiert (case-insensitive)
+    const existingSearch = await prisma.searchHistory.findFirst({
       where: {
         userId,
-        advertiserName,
-        searchedAt: {
-          gte: new Date(Date.now() - 5 * 60 * 1000),
+        advertiserName: {
+          equals: advertiserName,
+          mode: 'insensitive',
         },
       },
     })
 
-    if (recentSearch) {
-      // Aktualisiere bestehenden Eintrag
+    if (existingSearch) {
+      // Aktualisiere bestehenden Eintrag mit neuen Daten und Cache
       const updated = await prisma.searchHistory.update({
-        where: { id: recentSearch.id },
+        where: { id: existingSearch.id },
         data: {
           advertiserId,
           category,
           totalAds,
           activeAds,
           searchedAt: new Date(),
+          // Nur cachedData aktualisieren wenn übergeben
+          ...(cachedData && {
+            cachedData,
+            cachedAt: new Date(),
+          }),
         },
       })
       return NextResponse.json(updated)
@@ -79,6 +84,11 @@ export async function POST(request: NextRequest) {
         category,
         totalAds,
         activeAds,
+        // Nur cachedData speichern wenn übergeben
+        ...(cachedData && {
+          cachedData,
+          cachedAt: new Date(),
+        }),
       },
     })
 
