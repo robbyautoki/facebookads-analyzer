@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, Loader2, ArrowRight, CheckCircle, Globe, Building2 } from "lucide-react"
+import { Search, Loader2, ArrowRight, CheckCircle, Building2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -26,6 +26,79 @@ interface DomainSuggestion {
 
 interface AdvertiserSearchProps {
   variant?: "hero" | "compact"
+}
+
+// Hilfsfunktion: Domain aus Firmennamen ableiten
+const getDomainFromName = (name: string): string | null => {
+  // Bekannte Firmen-Mappings
+  const knownDomains: Record<string, string> = {
+    "nike": "nike.com",
+    "apple": "apple.com",
+    "tesla": "tesla.com",
+    "amazon": "amazon.com",
+    "google": "google.com",
+    "meta": "meta.com",
+    "facebook": "facebook.com",
+    "microsoft": "microsoft.com",
+    "shopify": "shopify.com",
+    "adidas": "adidas.com",
+    "netflix": "netflix.com",
+    "spotify": "spotify.com",
+    "uber": "uber.com",
+    "airbnb": "airbnb.com",
+  }
+
+  // Name bereinigen (z.B. "Nike, Inc." → "nike")
+  const cleanName = name.toLowerCase()
+    .replace(/,?\s*(inc\.?|llc|ltd|gmbh|ag|corp\.?|corporation|s\.?r\.?l\.?|co\.?)$/i, "")
+    .trim()
+
+  // Prüfen ob bekannte Domain
+  if (knownDomains[cleanName]) {
+    return knownDomains[cleanName]
+  }
+
+  // Versuchen aus dem Namen eine Domain zu generieren
+  const simpleName = cleanName.replace(/[^a-z0-9]/g, "")
+  if (simpleName.length >= 2) {
+    return `${simpleName}.com`
+  }
+
+  return null
+}
+
+// Favicon-Komponente mit Fallback
+function FaviconImage({
+  domain,
+  name,
+  className
+}: {
+  domain: string | null
+  name: string
+  className?: string
+}) {
+  const [hasError, setHasError] = useState(false)
+
+  if (!domain || hasError) {
+    return (
+      <div className={`bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold ${className}`}>
+        {name.charAt(0).toUpperCase()}
+      </div>
+    )
+  }
+
+  return (
+    <div className={`bg-white flex items-center justify-center overflow-hidden ${className}`}>
+      <img
+        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
+        alt={name}
+        width={28}
+        height={28}
+        onError={() => setHasError(true)}
+        className="object-contain"
+      />
+    </div>
+  )
 }
 
 export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
@@ -159,9 +232,11 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
                     : "hover:bg-slate-50 dark:hover:bg-slate-800"
                 }`}
               >
-                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold flex-shrink-0">
-                  {advertiser.name.charAt(0)}
-                </div>
+                <FaviconImage
+                  domain={getDomainFromName(advertiser.name)}
+                  name={advertiser.name}
+                  className="h-10 w-10 rounded-xl flex-shrink-0"
+                />
                 <div className="flex-1 text-left">
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-slate-900 dark:text-white">
@@ -203,9 +278,11 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
                       : "hover:bg-slate-50 dark:hover:bg-slate-800"
                   }`}
                 >
-                  <div className="h-10 w-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
-                    <Globe className="h-5 w-5 text-slate-500" />
-                  </div>
+                  <FaviconImage
+                    domain={domain.name}
+                    name={domain.name}
+                    className="h-10 w-10 rounded-xl flex-shrink-0"
+                  />
                   <span className="font-medium text-slate-900 dark:text-white">
                     {domain.name}
                   </span>
