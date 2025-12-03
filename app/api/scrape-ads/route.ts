@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 import { prisma } from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 import type {
   FacebookAd,
   ScrapeAdsRequest,
@@ -161,7 +162,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<ScrapeAds
               equals: advertiserName.trim(),
               mode: 'insensitive',
             },
-            cachedData: { not: null },
+            cachedData: { not: Prisma.JsonNull },
             cachedAt: {
               gte: new Date(Date.now() - CACHE_DURATION_MS),
             },
