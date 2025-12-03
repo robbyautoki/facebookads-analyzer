@@ -39,6 +39,7 @@ import {
   X,
 } from "lucide-react"
 
+import { UserButton } from "@clerk/nextjs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -429,7 +430,7 @@ export function FacebookAdsAnalyzer() {
   const [, setProgress] = useState(0)
   const [notifications] = useState(5)
   const [activeTab, setActiveTab] = useState("home")
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
 
@@ -481,8 +482,8 @@ export function FacebookAdsAnalyzer() {
                 <TrendingUp className="size-5" />
               </div>
               <div>
-                <h2 className="font-semibold">FB Ads Analyzer</h2>
-                <p className="text-xs text-muted-foreground">Ad Intelligence</p>
+                <h2 className="font-semibold">Quick Actions</h2>
+                <p className="text-xs text-muted-foreground">Navigation</p>
               </div>
             </div>
             <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
@@ -587,8 +588,8 @@ export function FacebookAdsAnalyzer() {
                 <TrendingUp className="size-5" />
               </div>
               <div>
-                <h2 className="font-semibold">FB Ads Analyzer</h2>
-                <p className="text-xs text-muted-foreground">Ad Intelligence</p>
+                <h2 className="font-semibold">Quick Actions</h2>
+                <p className="text-xs text-muted-foreground">Navigation</p>
               </div>
             </div>
           </div>
@@ -726,10 +727,13 @@ export function FacebookAdsAnalyzer() {
                 </Tooltip>
               </TooltipProvider>
 
-              <Avatar className="h-9 w-9 border-2 border-primary">
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-9 w-9 border-2 border-primary"
+                  }
+                }}
+              />
             </div>
           </div>
         </header>
