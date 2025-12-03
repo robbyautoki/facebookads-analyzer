@@ -43,6 +43,7 @@ export async function GET(request: NextRequest) {
     url.searchParams.set("api_key", apiKey)
     url.searchParams.set("num_advertisers", "10")
     url.searchParams.set("num_domains", "5")
+    url.searchParams.set("region", "DE")
 
     const response = await fetch(url.toString(), {
       headers: {
