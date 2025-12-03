@@ -1,4 +1,4 @@
-import { EllipsisIcon, PackageIcon, PackageOpenIcon, TruckIcon } from 'lucide-react'
+import { EllipsisIcon, ImageIcon, VideoIcon, LayoutGridIcon } from 'lucide-react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -20,66 +20,66 @@ const listItems = ['Share', 'Update', 'Refresh']
 
 const tabs = [
   {
-    name: 'Packed',
-    value: 'packed',
-    icon: PackageIcon,
+    name: 'Image',
+    value: 'image',
+    icon: ImageIcon,
     contentData: [
       {
-        label: 'Packing Pending',
+        label: 'High Engagement',
         value: 4250,
         progress: 80
       },
       {
-        label: 'Packing in Progress',
+        label: 'Medium Engagement',
         value: 2150,
         progress: 60
       },
       {
-        label: 'Packing Complete',
+        label: 'Low Engagement',
         value: 1750,
         progress: 40
       }
     ]
   },
   {
-    name: 'Shipped',
-    value: 'shipped',
-    icon: TruckIcon,
+    name: 'Video',
+    value: 'video',
+    icon: VideoIcon,
     contentData: [
       {
-        label: 'Shipping Pending',
+        label: 'High Views',
         value: 3250,
         progress: 70
       },
       {
-        label: 'Shipping in Progress',
+        label: 'Medium Views',
         value: 1150,
         progress: 50
       },
       {
-        label: 'Shipping Complete',
+        label: 'Low Views',
         value: 950,
         progress: 30
       }
     ]
   },
   {
-    name: 'Received',
-    value: 'received',
-    icon: PackageOpenIcon,
+    name: 'Carousel',
+    value: 'carousel',
+    icon: LayoutGridIcon,
     contentData: [
       {
-        label: 'Receiving Pending',
+        label: 'Multi-Image',
         value: 2250,
         progress: 80
       },
       {
-        label: 'Receiving in Progress',
+        label: 'Product Catalog',
         value: 1150,
         progress: 50
       },
       {
-        label: 'Receiving Complete',
+        label: 'Story Format',
         value: 950,
         progress: 30
       }
@@ -95,14 +95,14 @@ const UserOrderCard = ({ className }: { className?: string }) => {
           <Avatar className='size-9.5 rounded-lg'>
             <AvatarImage
               src='https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png'
-              alt='Hallie Richards'
+              alt='Nike Ads'
               className='rounded-lg'
             />
-            <AvatarFallback className='text-xs'>JW</AvatarFallback>
+            <AvatarFallback className='text-xs bg-blue-500 text-white'>NA</AvatarFallback>
           </Avatar>
           <div className='flex flex-col gap-1'>
-            <span className='text-xl font-medium'>@jackwilliams</span>
-            <span className='text-muted-foreground text-sm'>Business</span>
+            <span className='text-xl font-medium'>Nike Ads</span>
+            <span className='text-muted-foreground text-sm'>Active Campaign</span>
           </div>
         </div>
         <DropdownMenu>
@@ -125,10 +125,10 @@ const UserOrderCard = ({ className }: { className?: string }) => {
         <Separator />
         <div className='flex flex-1 flex-col gap-2'>
           <div className='flex items-baseline gap-2'>
-            <span className='text-2xl font-medium'>4,689</span>
-            <span className='text-muted-foreground text-sm'>Orders</span>
+            <span className='text-2xl font-medium'>12,847</span>
+            <span className='text-muted-foreground text-sm'>Ads Tracked</span>
           </div>
-          <Tabs defaultValue='packed' className='flex-1 justify-between gap-6'>
+          <Tabs defaultValue='image' className='flex-1 justify-between gap-6'>
             <TabsList className='w-full'>
               {tabs.map(({ icon: Icon, name, value }) => (
                 <TabsTrigger key={value} value={value} className='flex items-center gap-1 px-1.5'>

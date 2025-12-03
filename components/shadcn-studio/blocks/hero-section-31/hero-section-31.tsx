@@ -29,14 +29,14 @@ const userViewsChartData = [
 
 const HeroSection = () => {
   return (
-    <section className='relative flex-1'>
+    <section className='relative flex-1 bg-slate-900'>
       <div className='relative flex flex-col py-12 sm:py-16 lg:py-24'>
         <div className='mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 max-xl:justify-center sm:gap-16 sm:px-6 lg:gap-24 lg:px-8 xl:grid-cols-2'>
           <div className='flex flex-col justify-between gap-8'>
             <div className='flex flex-col gap-8'>
               <div className='flex flex-col justify-between gap-4'>
                 <MotionPreset fade slide={{ direction: 'up', offset: 50 }} transition={{ duration: 0.5 }}>
-                  <Badge variant='outline' className='text-sm font-normal'>
+                  <Badge variant='outline' className='text-sm font-normal border-blue-500/50 text-blue-400 bg-blue-500/10'>
                     Live Ad Tracking
                   </Badge>
                 </MotionPreset>
@@ -47,7 +47,7 @@ const HeroSection = () => {
                   transition={{ duration: 0.5 }}
                   delay={0.3}
                 >
-                  <h1 className='text-2xl font-semibold sm:text-3xl lg:text-5xl'>
+                  <h1 className='text-2xl font-semibold sm:text-3xl lg:text-5xl text-white'>
                     Discover Winning Facebook Ads
                   </h1>
                 </MotionPreset>
@@ -58,7 +58,7 @@ const HeroSection = () => {
                   transition={{ duration: 0.5 }}
                   delay={0.5}
                 >
-                  <p className='text-muted-foreground text-xl'>
+                  <p className='text-slate-300 text-xl'>
                     Analyze competitor ads, track advertisers, and uncover the strategies behind successful Facebook campaigns.
                   </p>
                 </MotionPreset>
@@ -74,7 +74,7 @@ const HeroSection = () => {
                   <Button
                     asChild
                     size='lg'
-                    className='group relative w-fit overflow-hidden rounded-lg text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-[position:-100%_0,0_0] has-[>svg]:px-6 dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
+                    className='group relative w-fit overflow-hidden rounded-lg text-base bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white'
                   >
                     <Link href='/sign-up'>
                       Start Free Trial
@@ -82,7 +82,8 @@ const HeroSection = () => {
                     </Link>
                   </Button>
                   <Button
-                    className='bg-primary/10 text-primary hover:bg-primary/20 focus-visible:ring-primary/20 dark:focus-visible:ring-primary/40 rounded-lg text-base'
+                    className='bg-white/10 text-white hover:bg-white/20 border-white/20 rounded-lg text-base'
+                    variant='outline'
                     size='lg'
                     asChild
                   >
@@ -101,28 +102,28 @@ const HeroSection = () => {
                   <svg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path
                       d='M17.7816 1.48437C14.2784 5.33255 10.9893 9.87536 8.41171 14.4347C7.87393 15.3861 6.85127 15.9588 5.75957 15.9125C5.75002 15.9121 5.7401 15.9118 5.73018 15.9114C4.66932 15.8692 3.71424 15.2484 3.24883 14.294C2.42893 12.615 1.25237 10.8327 0.202532 9.33392C-0.182788 8.78366 0.000875781 8.02291 0.590808 7.70185C0.602916 7.69523 0.615052 7.68901 0.62716 7.68238C2.07371 6.90069 3.881 7.3808 4.75194 8.77519C5.06786 9.28102 5.36834 9.79638 5.65227 10.3213C8.06126 6.97416 10.7751 3.8713 13.7399 1.07259C14.7309 0.137353 16.1051 -0.198769 17.3709 0.113478C17.9822 0.264088 18.2055 1.01895 17.7816 1.48437Z'
-                      fill='#16A34A'
+                      fill='#22C55E'
                     />
                   </svg>
-                  <p>Real-time ad monitoring</p>
+                  <p className='text-slate-200'>Real-time ad monitoring</p>
                 </div>
                 <div className='flex items-center gap-4'>
                   <svg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path
                       d='M17.7816 1.48437C14.2784 5.33255 10.9893 9.87536 8.41171 14.4347C7.87393 15.3861 6.85127 15.9588 5.75957 15.9125C5.75002 15.9121 5.7401 15.9118 5.73018 15.9114C4.66932 15.8692 3.71424 15.2484 3.24883 14.294C2.42893 12.615 1.25237 10.8327 0.202532 9.33392C-0.182788 8.78366 0.000875781 8.02291 0.590808 7.70185C0.602916 7.69523 0.615052 7.68901 0.62716 7.68238C2.07371 6.90069 3.881 7.3808 4.75194 8.77519C5.06786 9.28102 5.36834 9.79638 5.65227 10.3213C8.06126 6.97416 10.7751 3.8713 13.7399 1.07259C14.7309 0.137353 16.1051 -0.198769 17.3709 0.113478C17.9822 0.264088 18.2055 1.01895 17.7816 1.48437Z'
-                      fill='#16A34A'
+                      fill='#22C55E'
                     />
                   </svg>
-                  <p>Competitor ad analysis</p>
+                  <p className='text-slate-200'>Competitor ad analysis</p>
                 </div>
                 <div className='flex items-center gap-4'>
                   <svg width='18' height='16' viewBox='0 0 18 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
                     <path
                       d='M17.7816 1.48437C14.2784 5.33255 10.9893 9.87536 8.41171 14.4347C7.87393 15.3861 6.85127 15.9588 5.75957 15.9125C5.75002 15.9121 5.7401 15.9118 5.73018 15.9114C4.66932 15.8692 3.71424 15.2484 3.24883 14.294C2.42893 12.615 1.25237 10.8327 0.202532 9.33392C-0.182788 8.78366 0.000875781 8.02291 0.590808 7.70185C0.602916 7.69523 0.615052 7.68901 0.62716 7.68238C2.07371 6.90069 3.881 7.3808 4.75194 8.77519C5.06786 9.28102 5.36834 9.79638 5.65227 10.3213C8.06126 6.97416 10.7751 3.8713 13.7399 1.07259C14.7309 0.137353 16.1051 -0.198769 17.3709 0.113478C17.9822 0.264088 18.2055 1.01895 17.7816 1.48437Z'
-                      fill='#16A34A'
+                      fill='#22C55E'
                     />
                   </svg>
-                  <p>Trend & performance insights</p>
+                  <p className='text-slate-200'>Trend & performance insights</p>
                 </div>
               </MotionPreset>
             </div>
@@ -136,7 +137,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.5 }}
                 className='text-muted-foreground'
               >
-                Trusted by leading marketers worldwide
+                <span className='text-slate-400'>Trusted by leading marketers worldwide</span>
               </MotionPreset>
               <MotionPreset
                 fade
@@ -187,10 +188,10 @@ const HeroSection = () => {
             <div className='relative max-xl:max-w-135 md:mt-8 md:ml-3 md:grow'>
               <div className='w-fit -rotate-10'>
                 <GlowEffect
-                  colors={['#0284C7', '#16A34A', '#D97706', '#DC2626']}
+                  colors={['#3B82F6', '#8B5CF6', '#06B6D4', '#10B981']}
                   mode='colorShift'
                   blur='medium'
-                  className='opacity-40'
+                  className='opacity-60'
                 />
                 <AnatomyDetectedCard
                   title='Ad Performance'
@@ -203,10 +204,10 @@ const HeroSection = () => {
               </div>
               <div className='ms-auto -mt-50 rotate-6 md:w-fit'>
                 <GlowEffect
-                  colors={['#D97706', '#DC2626', '#0284C7', '#16A34A']}
+                  colors={['#8B5CF6', '#EC4899', '#3B82F6', '#06B6D4']}
                   mode='colorShift'
                   blur='medium'
-                  className='opacity-40'
+                  className='opacity-60'
                 />
                 <UserOrderCard className='relative ms-auto w-full max-w-85' />
               </div>

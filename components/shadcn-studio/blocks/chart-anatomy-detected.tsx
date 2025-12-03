@@ -25,7 +25,7 @@ type Props = {
 
 const userViewsChartConfig = {
   views: {
-    label: 'new user viewed'
+    label: 'impressions tracked'
   }
 } satisfies ChartConfig
 
@@ -35,7 +35,7 @@ const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] 
     return (
       <div className='bg-primary text-primary-foreground mx-2 space-y-1 rounded-md px-3 py-1.5 shadow-lg'>
         <div className='text-xs'>{payload[0].value.toLocaleString()}</div>
-        <div className='text-xs opacity-70'>new user viewed</div>
+        <div className='text-xs opacity-70'>impressions tracked</div>
       </div>
     )
   }
@@ -81,7 +81,7 @@ const AnatomyDetectedCard = ({ title, subTitle, chartData, productReach, predict
           <span className='text-muted-foreground text-sm'>Prediction {predictedValue}%</span>
         </div>
         <Button variant='outline' className='h-7 rounded-full px-2 py-1 text-xs'>
-          See details
+          View Analysis
         </Button>
       </CardFooter>
     </Card>
