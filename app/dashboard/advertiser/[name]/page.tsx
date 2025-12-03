@@ -29,60 +29,6 @@ import {
 } from "@/components/statistics"
 import type { AdvertiserAnalysis, SimpleAd } from "@/types/ads"
 
-// Akzentfarbe basierend auf Kategorie (für Border und dezente Highlights)
-const getCategoryAccent = (category?: string): { border: string; text: string; glow: string } => {
-  if (!category) return { border: 'border-slate-700', text: 'text-slate-400', glow: 'shadow-slate-500/10' }
-
-  const cat = category.toLowerCase()
-
-  // Entertainment / Media
-  if (cat.includes('entertainment') || cat.includes('media') || cat.includes('music') || cat.includes('video')) {
-    return { border: 'border-violet-500/30', text: 'text-violet-400', glow: 'shadow-violet-500/20' }
-  }
-  // Technology / Software
-  if (cat.includes('tech') || cat.includes('software') || cat.includes('app') || cat.includes('computer')) {
-    return { border: 'border-cyan-500/30', text: 'text-cyan-400', glow: 'shadow-cyan-500/20' }
-  }
-  // E-commerce / Shopping
-  if (cat.includes('commerce') || cat.includes('shop') || cat.includes('retail') || cat.includes('store')) {
-    return { border: 'border-emerald-500/30', text: 'text-emerald-400', glow: 'shadow-emerald-500/20' }
-  }
-  // Finance / Business
-  if (cat.includes('finance') || cat.includes('bank') || cat.includes('business') || cat.includes('consulting')) {
-    return { border: 'border-amber-500/30', text: 'text-amber-400', glow: 'shadow-amber-500/20' }
-  }
-  // Health / Fitness
-  if (cat.includes('health') || cat.includes('fitness') || cat.includes('medical') || cat.includes('wellness')) {
-    return { border: 'border-emerald-500/30', text: 'text-emerald-400', glow: 'shadow-emerald-500/20' }
-  }
-  // Food / Restaurant
-  if (cat.includes('food') || cat.includes('restaurant') || cat.includes('cafe') || cat.includes('drink')) {
-    return { border: 'border-orange-500/30', text: 'text-orange-400', glow: 'shadow-orange-500/20' }
-  }
-  // Fashion / Beauty
-  if (cat.includes('fashion') || cat.includes('beauty') || cat.includes('clothing') || cat.includes('apparel')) {
-    return { border: 'border-pink-500/30', text: 'text-pink-400', glow: 'shadow-pink-500/20' }
-  }
-  // Gaming
-  if (cat.includes('gaming') || cat.includes('game') || cat.includes('esport')) {
-    return { border: 'border-purple-500/30', text: 'text-purple-400', glow: 'shadow-purple-500/20' }
-  }
-  // Education
-  if (cat.includes('education') || cat.includes('school') || cat.includes('university') || cat.includes('learning')) {
-    return { border: 'border-blue-500/30', text: 'text-blue-400', glow: 'shadow-blue-500/20' }
-  }
-  // Travel
-  if (cat.includes('travel') || cat.includes('hotel') || cat.includes('tourism') || cat.includes('airline')) {
-    return { border: 'border-sky-500/30', text: 'text-sky-400', glow: 'shadow-sky-500/20' }
-  }
-  // Crypto / Web3
-  if (cat.includes('crypto') || cat.includes('web3') || cat.includes('blockchain') || cat.includes('nft')) {
-    return { border: 'border-amber-500/30', text: 'text-amber-400', glow: 'shadow-amber-500/20' }
-  }
-
-  return { border: 'border-slate-700', text: 'text-slate-400', glow: 'shadow-slate-500/10' }
-}
-
 export default function AdvertiserResultsPage() {
   const params = useParams()
   const router = useRouter()
@@ -272,112 +218,109 @@ export default function AdvertiserResultsPage() {
         Zurück zur Suche
       </Button>
 
-      {/* Advertiser Header - Premium Dark Design mit Akzent-Border */}
-      {(() => {
-        const accent = getCategoryAccent(advertiser.category)
-        return (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Card className={`overflow-hidden rounded-3xl bg-slate-950 border-t-2 ${accent.border} relative`}>
-              <CardContent className="p-8 relative">
-                {/* Top Section: Profile + Info + Actions */}
-                <div className="flex flex-col lg:flex-row gap-6 items-start">
-                  {/* Profile Photo */}
-                  <div className="h-24 w-24 rounded-2xl bg-slate-800 overflow-hidden flex-shrink-0 border border-slate-700 shadow-xl">
-                    {advertiser.profilePhoto ? (
-                      <img
-                        src={advertiser.profilePhoto}
-                        alt={advertiser.name}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <div className={`h-full w-full flex items-center justify-center text-4xl font-bold bg-slate-800 ${accent.text}`}>
-                        {advertiser.name.charAt(0)}
-                      </div>
-                    )}
+      {/* Advertiser Header - Gradient Design */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 border-0">
+          <CardContent className="p-8 text-white">
+            {/* Top Section: Profile + Info + Actions */}
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
+              {/* Profile Photo */}
+              <div className="h-24 w-24 rounded-2xl bg-white/10 backdrop-blur-sm overflow-hidden flex-shrink-0 border border-white/20 shadow-xl">
+                {advertiser.profilePhoto ? (
+                  <img
+                    src={advertiser.profilePhoto}
+                    alt={advertiser.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center text-4xl font-bold bg-white/10 text-white">
+                    {advertiser.name.charAt(0)}
                   </div>
+                )}
+              </div>
 
-                  {/* Info */}
-                  <div className="flex-1 space-y-3">
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <h1 className="text-3xl font-bold text-white">{advertiser.name}</h1>
-                      {advertiser.verification === "VERIFIED" && (
-                        <Badge className="bg-blue-500/20 text-blue-400 border border-blue-500/30">Verifiziert</Badge>
-                      )}
-                      {fromCache && (
-                        <Badge className="bg-amber-500/20 text-amber-400 border border-amber-500/30">
-                          <RefreshCw className="h-3 w-3 mr-1" />
-                          Cache
-                        </Badge>
-                      )}
-                    </div>
-                    {advertiser.category && (
-                      <p className={`font-medium ${accent.text}`}>{advertiser.category}</p>
-                    )}
-                    {advertiser.about && (
-                      <p className="text-slate-400 text-sm line-clamp-2 max-w-2xl">{advertiser.about}</p>
-                    )}
-                    {/* Facebook Link */}
-                    {advertiser.pageUrl && (
-                      <a
-                        href={advertiser.pageUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-300 transition-colors"
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                        Auf Facebook ansehen
-                      </a>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-wrap gap-2">
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
-                      onClick={() => fetchData(true)}
-                    >
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      Aktualisieren
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
-                      onClick={handleShare}
-                    >
-                      <Share2 className="mr-2 h-4 w-4" />
-                      Teilen
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
-                      onClick={handleSaveToWatchlist}
-                      disabled={watchlistSaved}
-                    >
-                      <Bookmark className={`mr-2 h-4 w-4 ${watchlistSaved ? "fill-current" : ""}`} />
-                      {watchlistSaved ? "Gespeichert" : "Merken"}
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
-                      onClick={handleExportCSV}
-                    >
-                      <Download className="mr-2 h-4 w-4" />
-                      Export
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-white text-slate-900 hover:bg-slate-100 font-semibold transition-all"
-                    >
-                      <FileText className="mr-2 h-4 w-4" />
-                      Bericht
-                    </Button>
-                  </div>
+              {/* Info */}
+              <div className="flex-1 space-y-3">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h1 className="text-3xl font-bold text-white">{advertiser.name}</h1>
+                  {advertiser.verification === "VERIFIED" && (
+                    <Badge className="bg-white/20 text-white border border-white/30">Verifiziert</Badge>
+                  )}
+                  {fromCache && (
+                    <Badge className="bg-amber-500/30 text-white border border-amber-400/30">
+                      <RefreshCw className="h-3 w-3 mr-1" />
+                      Cache
+                    </Badge>
+                  )}
                 </div>
+                {advertiser.category && (
+                  <p className="font-medium text-white/80">{advertiser.category}</p>
+                )}
+                {advertiser.about && (
+                  <p className="text-white/60 text-sm line-clamp-2 max-w-2xl">{advertiser.about}</p>
+                )}
+                {/* Facebook Link */}
+                {advertiser.pageUrl && (
+                  <a
+                    href={advertiser.pageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                    Auf Facebook ansehen
+                  </a>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  size="sm"
+                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  onClick={() => fetchData(true)}
+                >
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Aktualisieren
+                </Button>
+                <Button
+                  size="sm"
+                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  onClick={handleShare}
+                >
+                  <Share2 className="mr-2 h-4 w-4" />
+                  Teilen
+                </Button>
+                <Button
+                  size="sm"
+                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  onClick={handleSaveToWatchlist}
+                  disabled={watchlistSaved}
+                >
+                  <Bookmark className={`mr-2 h-4 w-4 ${watchlistSaved ? "fill-current" : ""}`} />
+                  {watchlistSaved ? "Gespeichert" : "Merken"}
+                </Button>
+                <Button
+                  size="sm"
+                  className="rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all"
+                  onClick={handleExportCSV}
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Export
+                </Button>
+                <Button
+                  size="sm"
+                  className="rounded-xl bg-white text-blue-700 hover:bg-white/90 font-semibold transition-all"
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  Bericht
+                </Button>
+              </div>
+            </div>
 
                 {/* Statistics Cards with Charts */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
@@ -416,8 +359,6 @@ export default function AdvertiserResultsPage() {
               </CardContent>
             </Card>
           </motion.div>
-        )
-      })()}
 
       {/* Hauptinhalt Tabs */}
       <Tabs defaultValue="all" className="w-full">

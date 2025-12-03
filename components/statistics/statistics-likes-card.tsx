@@ -32,8 +32,8 @@ const StatisticsLikesCard = ({ likes }: StatisticsLikesCardProps) => {
   const chartData = [{ likes: percentage, fill: 'var(--color-likes)' }]
 
   return (
-    <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors">
-      <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-colors">
+      <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
         <Heart className="h-4 w-4" />
         Likes
       </div>
@@ -50,7 +50,7 @@ const StatisticsLikesCard = ({ likes }: StatisticsLikesCardProps) => {
             gridType="circle"
             radialLines={false}
             stroke="none"
-            className="first:fill-slate-800 last:fill-slate-900"
+            className="first:fill-white/10 last:fill-transparent"
             polarRadius={[32, 25]}
           />
           <RadialBar dataKey="likes" background={{ fill: 'rgba(255,255,255,0.05)' }} />

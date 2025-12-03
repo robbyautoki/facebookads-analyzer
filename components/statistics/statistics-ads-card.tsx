@@ -30,8 +30,8 @@ const StatisticsAdsCard = ({ totalAds }: StatisticsAdsCardProps) => {
   const chartData = generateAdsData(totalAds)
 
   return (
-    <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 hover:border-slate-700 transition-colors">
-      <div className="flex items-center gap-2 text-slate-500 text-sm mb-1">
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-colors">
+      <div className="flex items-center gap-2 text-white/60 text-sm mb-1">
         <BarChart3 className="h-4 w-4" />
         Anzeigen gesamt
       </div>
