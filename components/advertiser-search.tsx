@@ -251,7 +251,7 @@ export function AdvertiserSearch({ variant = "hero" }: AdvertiserSearchProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="overflow-hidden rounded-3xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 border-0">
+      <Card className="overflow-visible rounded-3xl bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 border-0">
         <CardContent className="p-8 text-white">
           <div className="space-y-6">
             <div className="space-y-2">
